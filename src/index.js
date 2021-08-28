@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCOJ6SdygSsoBfCiDuKQQUFmZnLwLEV77Q',
