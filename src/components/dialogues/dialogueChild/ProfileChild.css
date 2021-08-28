@@ -1,0 +1,18 @@
+.ProfileDialog {
+	display: flex;
+	flex-direction: row;
+}
+.dialogLeft {
+	display: flex;
+	flex-direction: column;
+	padding: 0 20px;
+}
+.dialogueRight {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 0 20px;
+}
+.profileImage {
+	padding: 0 0 20px 0;
+}

@@ -11,6 +11,8 @@ function App() {
 		});
 	}, []);
 
+	// return <Teacher />;
+
 	return (
 		<div className="App">
 			<div>

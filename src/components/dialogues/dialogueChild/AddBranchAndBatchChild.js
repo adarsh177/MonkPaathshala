@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, makeStyles } from '@material-ui/core';
+
+const styles = makeStyles({
+	root: {
+		margin: '10px 0 10px 0',
+	},
+});
 
 const branchs = [
 	{
@@ -31,10 +37,11 @@ export default function AddBranchAndBatchChild() {
 		let value = event.target.value;
 		setValue({ [name]: value });
 	};
-	console.log(value);
+	const classes = styles();
 	return (
 		<div>
 			<TextField
+				className={classes.root}
 				style={{ display: '' }}
 				id="outlined-select-branch-native"
 				select
@@ -55,6 +62,7 @@ export default function AddBranchAndBatchChild() {
 			</TextField>
 
 			<TextField
+				className={classes.root}
 				style={{ display: '' }}
 				id="outlined-basic"
 				label="Batch year"
