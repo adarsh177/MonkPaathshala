@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
 
 export default function AddSubjectChild() {
-	const [value, setValue] = useState('Controlled');
+	const [value, setValue] = useState('');
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
+		console.log(value);
 	};
 	return (
 		<div>
@@ -15,6 +16,7 @@ export default function AddSubjectChild() {
 				variant="outlined"
 				onChange={() => handleChange}
 				value={value}
+				placeholder="Subject Name"
 			/>
 		</div>
 	);

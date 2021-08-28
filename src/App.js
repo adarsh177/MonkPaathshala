@@ -15,6 +15,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<div>Monk pathshala</div>
 			<Teacher />
 		</div>
 	);

@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../media/logo.png';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
+//Base Dialog components -------------------------------------------------
+
+import BaseDialogue from '../dialogues/BaseDialogue';
+import ConfirmationBaseDialog from '../dialogues/ConfirmationBaseDialog';
+
+// Child dialoge components ---------------------------------------------
+import ProfileChild from '../dialogues/dialogueChild/ProfileChild';
+import LogoutChild from '../dialogues/dialogueChild/LogoutChild';
+import AddSubjectChild from '../dialogues/dialogueChild/AddSubjectChild';
 
 const subjects = [
 	{
@@ -37,6 +52,67 @@ const TeacherTopNav = () => {
 	const handleChange = (event) => {
 		setsubject(event.target.value);
 	};
+
+	//material-ui profile Dropdown ------------------------
+
+	const [open, setOpen] = React.useState(false);
+	const anchorRef = React.useRef(null);
+
+	const handleToggle = () => {
+		setOpen((prevOpen) => !prevOpen);
+	};
+
+	const handleClose = (event) => {
+		if (anchorRef.current && anchorRef.current.contains(event.target)) {
+			return;
+		}
+
+		setOpen(false);
+	};
+
+	function handleListKeyDown(event) {
+		if (event.key === 'Tab') {
+			event.preventDefault();
+			setOpen(false);
+		}
+	}
+
+	// return focus to the button when we transitioned from !open -> open
+	const prevOpen = React.useRef(open);
+	React.useEffect(() => {
+		if (prevOpen.current === true && open === false) {
+			anchorRef.current.focus();
+		}
+
+		prevOpen.current = open;
+	}, [open]);
+
+	// states for profile dialog ---------------------------
+	const [profile, setProfile] = useState(false);
+	const handleProfileOpen = () => {
+		setProfile(true);
+	};
+	const handleProfileClose = () => {
+		setProfile(false);
+	};
+
+	// states for Logout dialog ---------------------------
+	const [Logout, setLogout] = useState(false);
+	const handleLogoutOpen = () => {
+		setLogout(true);
+	};
+	const handleLogoutClose = () => {
+		setLogout(false);
+	};
+	// states for add Subject dialog ---------------------------
+	const [addSubject, setAddSubject] = useState(false);
+	const handleaddSubjectOpen = () => {
+		setAddSubject(true);
+	};
+	const handleaddSubjectClose = () => {
+		setAddSubject(false);
+	};
+
 	return (
 		<div>
 			<div className="teacher-top-nav">
@@ -57,6 +133,9 @@ const TeacherTopNav = () => {
 							helperText="Please select your subject"
 							variant="outlined"
 						>
+							<option key="0" value="+  Add Subject" onClick={handleaddSubjectOpen}>
+								+ Add Subject
+							</option>
 							{subjects.map((option) => (
 								<option key={option.value} value={option.value}>
 									{option.label}
@@ -65,12 +144,71 @@ const TeacherTopNav = () => {
 						</TextField>
 					</div>
 					<div className="nav-content-profile">
-						<Button>
+						<Button
+							ref={anchorRef}
+							aria-controls={open ? 'menu-list-grow' : undefined}
+							aria-haspopup="true"
+							onClick={handleToggle}
+						>
 							<AccountCircleIcon />
 						</Button>
+						<Popper
+							open={open}
+							anchorEl={anchorRef.current}
+							role={undefined}
+							transition
+							disablePortal
+						>
+							{({ TransitionProps, placement }) => (
+								<Grow
+									{...TransitionProps}
+									style={{
+										transformOrigin:
+											placement === 'bottom' ? 'center top' : 'center bottom',
+									}}
+								>
+									<Paper>
+										<ClickAwayListener onClickAway={handleClose}>
+											<MenuList
+												autoFocusItem={open}
+												id="menu-list-grow"
+												onKeyDown={handleListKeyDown}
+											>
+												<MenuItem onClick={handleProfileOpen}>
+													Profile
+												</MenuItem>
+												<MenuItem onClick={handleLogoutOpen}>
+													Logout
+												</MenuItem>
+											</MenuList>
+										</ClickAwayListener>
+									</Paper>
+								</Grow>
+							)}
+						</Popper>
 					</div>
 				</div>
 			</div>
+
+			<BaseDialogue
+				title="Subject"
+				child={<AddSubjectChild />}
+				open={addSubject}
+				handleClose={handleaddSubjectClose}
+			/>
+
+			<BaseDialogue
+				title="Profile"
+				child={<ProfileChild />}
+				open={profile}
+				handleClose={handleProfileClose}
+			/>
+			<ConfirmationBaseDialog
+				action="Logout"
+				child={<LogoutChild />}
+				open={Logout}
+				handleClose={handleLogoutClose}
+			/>
 		</div>
 	);
 };
