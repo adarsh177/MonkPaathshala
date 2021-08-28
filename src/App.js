@@ -1,9 +1,5 @@
 function App() {
-    return (
-        <div className="App">
-            <dib>Monk pathshala</dib>
-        </div>
-    );
+  return <div className="App">Monk Pathshala</div>;
 }
 
 export default App;
