@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
+import Logo from '../../../media/logo-100px.png';
 
 // Material ui dropdown-----------------------------
 const branchs = [
@@ -31,7 +32,7 @@ export default function ProfileChild() {
 	return (
 		<React.Fragment>
 			<div className="dialogLeft">
-				<img className="dialogProfileImg" src="#" alt="profile" />
+				<img className="dialogProfileImg" src={Logo} alt="profile" />
 				<label for="changeProfileImage" className="dialogChangeImageButton">
 					Change
 				</label>
