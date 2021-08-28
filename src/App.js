@@ -13,8 +13,10 @@ function App() {
 
 	return (
 		<div className="App">
-			<div>Monk pathshala</div>
-			<Teacher />
+			<div>
+				{/* Monk pathshala */}
+				<Teacher />
+			</div>
 		</div>
 	);
 }

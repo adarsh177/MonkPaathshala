@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './teacher.scss';
 import TeacherTopNav from '../../components/top nav/TeacherTopNav';
 
 import Tooltip from '@material-ui/core/Tooltip';
@@ -14,57 +14,58 @@ import SubjectDetail from './SubjectDetails/SubjectDetail';
 
 const Teacher = () => {
 	const [index, setIndex] = React.useState(0);
-
 	return (
 		<div>
 			<TeacherTopNav />
-			<div className="teacher-side-nav">
-				<div
-					className="side-nav-item"
-					onClick={() => {
-						setIndex(0);
-					}}
-				>
-					<Tooltip title="Home" arrow placement="right">
-						<HomeIcon />
-					</Tooltip>
+			<div className="teachers-dashboard">
+				<div className="teacher-side-nav">
+					<div
+						className={`side-nav-item ${index === 0 && 'active-nav'}`}
+						onClick={() => {
+							setIndex(0);
+						}}
+					>
+						<Tooltip title="Home" arrow placement="right">
+							<HomeIcon />
+						</Tooltip>
+					</div>
+					<div
+						className={`side-nav-item ${index === 1 && 'active-nav'}`}
+						onClick={() => {
+							setIndex(1);
+						}}
+					>
+						<Tooltip title="Assignment" arrow placement="right">
+							<AssignmentIcon />
+						</Tooltip>
+					</div>
+					<div
+						className={`side-nav-item ${index === 2 && 'active-nav'}`}
+						onClick={() => {
+							setIndex(2);
+						}}
+					>
+						<Tooltip title="Test" arrow placement="right">
+							<BorderColorIcon />
+						</Tooltip>
+					</div>
+					<div
+						className={`side-nav-item ${index === 3 && 'active-nav'}`}
+						onClick={() => {
+							setIndex(3);
+						}}
+					>
+						<Tooltip title="Subject" arrow placement="right">
+							<ReceiptIcon />
+						</Tooltip>
+					</div>
 				</div>
-				<div
-					className="side-nav-item"
-					onClick={() => {
-						setIndex(1);
-					}}
-				>
-					<Tooltip title="Assignment" arrow placement="right">
-						<AssignmentIcon />
-					</Tooltip>
+				<div className="teacher-main">
+					{index === 0 && <Home />}
+					{index === 1 && <Assignment />}
+					{index === 2 && <Test />}
+					{index === 3 && <SubjectDetail />}
 				</div>
-				<div
-					className="side-nav-item"
-					onClick={() => {
-						setIndex(2);
-					}}
-				>
-					<Tooltip title="Test" arrow placement="right">
-						<BorderColorIcon />
-					</Tooltip>
-				</div>
-				<div
-					className="side-nav-item"
-					onClick={() => {
-						setIndex(3);
-					}}
-				>
-					<Tooltip title="Subject" arrow placement="right">
-						<ReceiptIcon />
-					</Tooltip>
-				</div>
-			</div>
-			<div className="teacher-main">
-				{index === 0 && <Home />}
-				{index === 1 && <Assignment />}
-				{index === 2 && <Test />}
-				{index === 3 && <SubjectDetail />}
 			</div>
 		</div>
 	);

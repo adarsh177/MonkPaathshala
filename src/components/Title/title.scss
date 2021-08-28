@@ -1,0 +1,9 @@
+@import '../../variable';
+
+.heading {
+	font-size: 32px;
+	font-weight: bold;
+	border-left: 5px solid $darkblue;
+	color: $lightblue;
+	padding-left: 20px;
+}

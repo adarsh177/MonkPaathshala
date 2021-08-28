@@ -4,6 +4,8 @@ import { subjectDetailData } from './subjectDetailData';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button, ThemeProvider } from '@material-ui/core';
 import theme from '../../../ThemeConfig';
+import { createTheme } from '@material-ui/core/styles';
+import './subject.scss';
 
 //base dialog component --------------------------------
 
@@ -20,11 +22,24 @@ const SubjectDetail = () => {
 	const handleDeleteClose = () => {
 		setDeleteDialogue(false);
 	};
+	const theme = createTheme({
+		palette: {
+			primary: {
+				main: '#279225',
+			},
+			secondary: {
+				main: '#b20808',
+			},
+		},
+	});
 	return (
 		<ThemeProvider theme={theme}>
 			<div classname="subjectdetail">
 				<div className="subject-heading">
 					<Title name="Engineering Economics" />
+					<Button variant="contained" color="primary" className="add-batch">
+						+&nbsp;&nbsp;Add Batch
+					</Button>
 				</div>
 				<div className="subject-table">
 					<div className="subject-table-heading">
@@ -49,6 +64,11 @@ const SubjectDetail = () => {
 							</div>
 						);
 					})}
+				</div>
+				<div className="delete-subject">
+					<Button variant="contained" color="secondary">
+						Delete Subject
+					</Button>
 				</div>
 			</div>
 			<ConfirmationBaseDialog

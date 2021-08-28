@@ -1,0 +1,41 @@
+@import '../../../variable';
+
+.subject-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.subject-table {
+	margin-top: 32px;
+	.subject-table-heading,
+	.subject-table-content {
+		display: grid;
+		grid-template-columns: 25% auto 15%;
+		// justify-content: space-between;
+
+		border: 2px solid $border;
+
+		padding: 10px 36px;
+
+		font-size: 24px;
+
+		font-weight: 600;
+		text-align: center;
+		.table-heading-item,
+		.table-content-item {
+			&:nth-child(1) {
+				text-align: left;
+				padding-left: 36px;
+			}
+		}
+	}
+	.subject-table-content {
+		font-weight: 500;
+	}
+}
+.delete-subject {
+	display: flex;
+
+	justify-content: end;
+	margin-top: 50px;
+}

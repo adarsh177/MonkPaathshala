@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Logo from '../../media/logo.png';
+import './topnav.scss';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
