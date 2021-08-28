@@ -65,7 +65,7 @@ const SubjectDetail = () => {
 						);
 					})}
 				</div>
-				<div className="delete-subject">
+				<div className="delete-subject-button">
 					<Button variant="contained" color="secondary">
 						Delete Subject
 					</Button>
