@@ -31,14 +31,12 @@ const TeacherTopNav = () => {
 			margin: theme.spacing(1),
 		},
 	}));
-
 	const classes = useStyles();
 	const [subject, setsubject] = React.useState('Maths');
 
 	const handleChange = (event) => {
 		setsubject(event.target.value);
 	};
-
 	return (
 		<div>
 			<div className="teacher-top-nav">
