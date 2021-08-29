@@ -45,7 +45,7 @@ export default function BaseDialogue(props) {
 						DISCARD
 					</Button>
 					<Button onClick={props.onClick} variant="contained" color="primary">
-						SAVE
+						{props.positiveButtonTitle ?? 'SAVE'}
 					</Button>
 				</DialogActions>
 			</Dialog>

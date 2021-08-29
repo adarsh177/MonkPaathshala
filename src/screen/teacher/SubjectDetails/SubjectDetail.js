@@ -2,7 +2,17 @@ import React, { useState } from 'react';
 import Title from '../../../components/Title/Title';
 import { subjectDetailData } from './subjectDetailData';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button, ThemeProvider } from '@material-ui/core';
+import {
+	Button,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	ThemeProvider,
+} from '@material-ui/core';
 import theme from '../../../ThemeConfig';
 import { createTheme } from '@material-ui/core/styles';
 import './subject.scss';
@@ -20,6 +30,8 @@ import AddBranchAndBatchChild from '../../../components/dialogues/dialogueChild/
 const SubjectDetail = () => {
 	// delete a single batch from subject--------------------------------
 	const [deleteDialogue, setDeleteDialogue] = useState(false);
+	const [showAddGroup, setShowAddGroup] = useState(false);
+
 	const handleDeleteOpen = () => {
 		setDeleteDialogue(true);
 	};
@@ -45,7 +57,7 @@ const SubjectDetail = () => {
 		setaddBatchDialogue(false);
 	};
 
-	const theme2 = createTheme({
+	const theme = createTheme({
 		palette: {
 			primary: {
 				main: '#279225',
@@ -58,7 +70,7 @@ const SubjectDetail = () => {
 			<div classname="subjectdetail">
 				<div className="subject-heading">
 					<Title name="Engineering Economics" />
-					<ThemeProvider theme={theme2}>
+					<ThemeProvider theme={theme}>
 						<Button
 							variant="contained"
 							color="primary"
@@ -69,30 +81,39 @@ const SubjectDetail = () => {
 						</Button>
 					</ThemeProvider>
 				</div>
-				<div className="subject-table">
-					<div className="subject-table-heading">
-						<div className="table-heading-item">Batch</div>
-						<div className="table-heading-item">No. of Students</div>
-						<div className="table-heading-item">Action</div>
-					</div>
-					{subjectDetailData.map((details) => {
-						return (
-							<div className="subject-table-content">
-								<div className="table-content-item">
-									{details.branch}&nbsp;{details.batchyear}
-								</div>
-								<div className="table-content-item">{details.students}</div>
-								<Button
-									className="table-content-item"
-									onClick={handleDeleteOpen}
-									color="secondary"
-								>
-									<DeleteIcon />
-								</Button>
-							</div>
-						);
-					})}
-				</div>
+				<br />
+				<TableContainer component={Paper}>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Batch</TableCell>
+								<TableCell>No. of Students</TableCell>
+								<TableCell>Action</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{subjectDetailData.map((details) => {
+								return (
+									<TableRow>
+										<TableCell>
+											{details.branch}&nbsp;{details.batchyear}
+										</TableCell>
+										<TableCell>{details.students}</TableCell>
+										<TableCell>
+											<Button
+												className="table-content-item"
+												onClick={handleDeleteOpen}
+												color="secondary"
+											>
+												<DeleteIcon />
+											</Button>
+										</TableCell>
+									</TableRow>
+								);
+							})}
+						</TableBody>
+					</Table>
+				</TableContainer>
 				<div className="delete-subject-button">
 					<Button variant="contained" color="secondary" onClick={handleDeleteSubjectOpen}>
 						Delete Subject

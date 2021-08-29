@@ -38,7 +38,7 @@ const years = [2016, 2017, 2018, 2019, 2020, 2021];
 export default function AddBranchAndBatchChild() {
 	const [value, setValue] = useState({
 		branch: '',
-		batch: 2016,
+		batch: null,
 	});
 
 	const handleChange = (event) => {
@@ -68,8 +68,6 @@ export default function AddBranchAndBatchChild() {
 					))}
 				</Select>
 			</FormControl>
-
-			<br />
 
 			<FormControl variant="outlined" className={classes.root}>
 				<InputLabel id="add-group-select-year-label">Select Year</InputLabel>

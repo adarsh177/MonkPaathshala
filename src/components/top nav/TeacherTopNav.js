@@ -25,7 +25,7 @@ import AddSubjectChild from '../dialogues/dialogueChild/AddSubjectChild';
 const subjects = [
 	{
 		value: 'Maths',
-		label: 'Maths',
+		label: 'Maths Name will come here',
 	},
 	{
 		value: 'English',
@@ -120,7 +120,7 @@ const TeacherTopNav = () => {
 				<img src={Logo} alt="logo" className="top-nav-logo" />
 				<div className="top-nav-content">
 					<div className="nav-content-list">
-						<FormControl variant="outlined" size="small">
+						<FormControl style={{ width: '150px' }} variant="outlined" size="small">
 							<Select
 								id="outlined-select-subject-native"
 								value={subject}
