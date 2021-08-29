@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './assignment.scss';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Title from '../../../components/Title/Title';
@@ -7,6 +7,8 @@ import { createTheme } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { assignment } from './assignment-data';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import BaseDialogue from '../../../components/dialogues/BaseDialogue';
+import CreateAssignment from '../../../components/dialogues/dialogueChild/CreateAssignment';
 const Assignment = () => {
 	const [index, setIndex] = React.useState(0);
 	const theme2 = createTheme({
@@ -16,13 +18,21 @@ const Assignment = () => {
 			},
 		},
 	});
-	const handleAddAssignment = () => {};
+	const [assignmentDialog, setassignmentDialog] = useState(false);
+
+	const assignmentDialogOpen = () => {
+		setassignmentDialog(true);
+	};
+	const assignmentDialogClose = () => {
+		setassignmentDialog(false);
+	};
+
 	return (
 		<div className="assignment">
 			<div className="assignment-heading">
 				<Title name="Assignments" />
 				<ThemeProvider theme={theme2}>
-					<Button variant="contained" color="primary" onClick={handleAddAssignment}>
+					<Button variant="contained" color="primary" onClick={assignmentDialogOpen}>
 						+&nbsp;&nbsp;Add Assignment
 					</Button>
 				</ThemeProvider>
@@ -71,6 +81,12 @@ const Assignment = () => {
 					);
 				})}
 			</div>
+			<BaseDialogue
+				title="Assignment"
+				child={<CreateAssignment />}
+				open={assignmentDialog}
+				handleClose={assignmentDialogClose}
+			/>
 		</div>
 	);
 };
