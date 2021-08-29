@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Logo from '../../media/logo.png';
 import './topnav.scss';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Select, TextField, InputLabel, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -120,29 +120,23 @@ const TeacherTopNav = () => {
 				<img src={Logo} alt="logo" className="top-nav-logo" />
 				<div className="top-nav-content">
 					<div className="nav-content-list">
-						<TextField
-							className={classes.button}
-							endIcon={<ArrowRightIcon />}
+						<Select
 							id="outlined-select-subject-native"
-							select
-							label="Subject"
 							value={subject}
 							onChange={handleChange}
-							SelectProps={{
-								native: true,
-							}}
 							helperText="Please select your subject"
 							variant="outlined"
+							style={{ backgroundColor: '#fff' }}
 						>
-							<option key="0" value="+  Add Subject" onClick={handleaddSubjectOpen}>
+							<MenuItem key="0" value="+  Add Subject" onClick={handleaddSubjectOpen}>
 								+ Add Subject
-							</option>
+							</MenuItem>
 							{subjects.map((option) => (
-								<option key={option.value} value={option.value}>
+								<MenuItem key={option.value} value={option.value}>
 									{option.label}
-								</option>
+								</MenuItem>
 							))}
-						</TextField>
+						</Select>
 					</div>
 					<div className="nav-content-profile">
 						<Button
@@ -150,8 +144,9 @@ const TeacherTopNav = () => {
 							aria-controls={open ? 'menu-list-grow' : undefined}
 							aria-haspopup="true"
 							onClick={handleToggle}
+							style={{ color: 'white' }}
 						>
-							<AccountCircleIcon />
+							<AccountCircleIcon color="inherit" />
 						</Button>
 						<Popper
 							open={open}
@@ -159,6 +154,7 @@ const TeacherTopNav = () => {
 							role={undefined}
 							transition
 							disablePortal
+							style={{ zIndex: 1000 }}
 						>
 							{({ TransitionProps, placement }) => (
 								<Grow
