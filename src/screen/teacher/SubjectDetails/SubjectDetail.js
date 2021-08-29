@@ -28,6 +28,7 @@ import AddSubjectChild from '../../../components/dialogues/dialogueChild/AddSubj
 import AddBranchAndBatchChild from '../../../components/dialogues/dialogueChild/AddBranchAndBatchChild';
 
 const SubjectDetail = () => {
+	// delete a single batch from subject--------------------------------
 	const [deleteDialogue, setDeleteDialogue] = useState(false);
 	const [showAddGroup, setShowAddGroup] = useState(false);
 
@@ -38,29 +39,47 @@ const SubjectDetail = () => {
 		setDeleteDialogue(false);
 	};
 
+	// delete subject -------------------------------
+	const [deleteSubjectDialogue, setDeleteSubjectDialogue] = useState(false);
+	const handleDeleteSubjectOpen = () => {
+		setDeleteSubjectDialogue(true);
+	};
+	const handleDeleteSubjectClose = () => {
+		setDeleteSubjectDialogue(false);
+	};
+
+	// Add batch subject -------------------------------
+	const [addBatchDialogue, setaddBatchDialogue] = useState(false);
+	const handleaddBatchOpen = () => {
+		setaddBatchDialogue(true);
+	};
+	const handleaddBatchClose = () => {
+		setaddBatchDialogue(false);
+	};
+
 	const theme = createTheme({
 		palette: {
 			primary: {
 				main: '#279225',
 			},
-			secondary: {
-				main: '#b20808',
-			},
 		},
 	});
+
 	return (
 		<ThemeProvider theme={theme}>
 			<div classname="subjectdetail">
 				<div className="subject-heading">
 					<Title name="Engineering Economics" />
-					<Button
-						variant="contained"
-						color="primary"
-						className="add-batch"
-						onClick={() => setShowAddGroup(true)}
-					>
-						+&nbsp;&nbsp;Add Batch
-					</Button>
+					<ThemeProvider theme={theme}>
+						<Button
+							variant="contained"
+							color="primary"
+							className="add-batch"
+							onClick={handleaddBatchOpen}
+						>
+							+&nbsp;&nbsp;Add Batch
+						</Button>
+					</ThemeProvider>
 				</div>
 				<br />
 				<TableContainer component={Paper}>
@@ -96,7 +115,7 @@ const SubjectDetail = () => {
 					</Table>
 				</TableContainer>
 				<div className="delete-subject-button">
-					<Button variant="contained" color="secondary" onClick={handleDeleteOpen}>
+					<Button variant="contained" color="secondary" onClick={handleDeleteSubjectOpen}>
 						Delete Subject
 					</Button>
 				</div>
@@ -107,13 +126,16 @@ const SubjectDetail = () => {
 				open={deleteDialogue}
 				handleClose={handleDeleteClose}
 			/>
+			<ConfirmationBaseDialog
+				action="Delete"
+				child={<DeleteChild />}
+				open={deleteSubjectDialogue}
+				handleClose={handleDeleteSubjectClose}
+			/>
 			<BaseDialogue
-				open={showAddGroup}
-				handleClose={() => {
-					setShowAddGroup(false);
-				}}
-				title="Add Group"
-				positiveButtonTitle="Add Group"
+				open={addBatchDialogue}
+				handleClose={handleaddBatchClose}
+				title="Add Batch"
 				child={<AddBranchAndBatchChild />}
 			/>
 		</ThemeProvider>
