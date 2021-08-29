@@ -17,6 +17,7 @@ import { ThemeProvider } from '@material-ui/styles';
 const styles = makeStyles({
 	root: {
 		width: '300px',
+		marginBottom: '10px',
 	},
 });
 // Material ui dropdown-----------------------------
@@ -78,13 +79,13 @@ export default function ProfileChild() {
 					/>
 					<br />
 					<TextField
-						className="classes.root"
+						className={classes.root}
 						id="outlined-basic"
 						label="Email"
 						variant="outlined"
 					/>
 					<br />
-					<FormControl variant="outlined">
+					<FormControl variant="outlined" className={classes.root}>
 						<InputLabel id="profile-branch-select-label">Select Branch</InputLabel>
 						<Select
 							id="profile-branch-select"

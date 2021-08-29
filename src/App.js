@@ -16,7 +16,6 @@ function App() {
 	return (
 		<div className="App">
 			<div>
-				{/* Monk pathshala */}
 				<Teacher />
 			</div>
 		</div>

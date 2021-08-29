@@ -8,6 +8,12 @@ import {
 	InputLabel,
 } from '@material-ui/core';
 
+const style = makeStyles({
+	root: {
+		margin: '10px 0',
+	},
+});
+
 const branchs = [
 	{
 		value: 'CSE',
@@ -40,10 +46,12 @@ export default function AddBranchAndBatchChild() {
 		let value = event.target.value;
 		setValue((val) => ({ ...val, [name]: value }));
 	};
+
+	const classes = style();
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
 			<p>Select the branch and batch year you would like to add to this subject.</p>
-			<FormControl variant="outlined">
+			<FormControl variant="outlined" className={classes.root}>
 				<InputLabel id="add-group-select-branch-label">Select Branch</InputLabel>
 				<Select
 					id="add-group-select-branch"
@@ -63,7 +71,7 @@ export default function AddBranchAndBatchChild() {
 
 			<br />
 
-			<FormControl variant="outlined">
+			<FormControl variant="outlined" className={classes.root}>
 				<InputLabel id="add-group-select-year-label">Select Year</InputLabel>
 				<Select
 					id="add-group-select-year"

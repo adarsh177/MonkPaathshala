@@ -18,12 +18,31 @@ import AddSubjectChild from '../../../components/dialogues/dialogueChild/AddSubj
 import AddBranchAndBatchChild from '../../../components/dialogues/dialogueChild/AddBranchAndBatchChild';
 
 const SubjectDetail = () => {
+	// delete a single batch from subject--------------------------------
 	const [deleteDialogue, setDeleteDialogue] = useState(false);
 	const handleDeleteOpen = () => {
 		setDeleteDialogue(true);
 	};
 	const handleDeleteClose = () => {
 		setDeleteDialogue(false);
+	};
+
+	// delete subject -------------------------------
+	const [deleteSubjectDialogue, setDeleteSubjectDialogue] = useState(false);
+	const handleDeleteSubjectOpen = () => {
+		setDeleteSubjectDialogue(true);
+	};
+	const handleDeleteSubjectClose = () => {
+		setDeleteSubjectDialogue(false);
+	};
+
+	// Add batch subject -------------------------------
+	const [addBatchDialogue, setaddBatchDialogue] = useState(false);
+	const handleaddBatchOpen = () => {
+		setaddBatchDialogue(true);
+	};
+	const handleaddBatchClose = () => {
+		setaddBatchDialogue(false);
 	};
 
 	const theme2 = createTheme({
@@ -40,7 +59,12 @@ const SubjectDetail = () => {
 				<div className="subject-heading">
 					<Title name="Engineering Economics" />
 					<ThemeProvider theme={theme2}>
-						<Button variant="contained" color="primary" className="add-batch">
+						<Button
+							variant="contained"
+							color="primary"
+							className="add-batch"
+							onClick={handleaddBatchOpen}
+						>
 							+&nbsp;&nbsp;Add Batch
 						</Button>
 					</ThemeProvider>
@@ -70,7 +94,7 @@ const SubjectDetail = () => {
 					})}
 				</div>
 				<div className="delete-subject-button">
-					<Button variant="contained" color="secondary">
+					<Button variant="contained" color="secondary" onClick={handleDeleteSubjectOpen}>
 						Delete Subject
 					</Button>
 				</div>
@@ -81,10 +105,16 @@ const SubjectDetail = () => {
 				open={deleteDialogue}
 				handleClose={handleDeleteClose}
 			/>
+			<ConfirmationBaseDialog
+				action="Delete"
+				child={<DeleteChild />}
+				open={deleteSubjectDialogue}
+				handleClose={handleDeleteSubjectClose}
+			/>
 			<BaseDialogue
-				// open\
-				handleClose={() => {}}
-				title="Add Group"
+				open={addBatchDialogue}
+				handleClose={handleaddBatchClose}
+				title="Add Batch"
 				child={<AddBranchAndBatchChild />}
 			/>
 		</ThemeProvider>
