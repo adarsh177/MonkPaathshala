@@ -13,6 +13,9 @@ import ConfirmationBaseDialog from '../../../components/dialogues/ConfirmationBa
 
 //child dialog component --------------------------------
 import DeleteChild from '../../../components/dialogues/dialogueChild/DeleteChild';
+import BaseDialogue from '../../../components/dialogues/BaseDialogue';
+import AddSubjectChild from '../../../components/dialogues/dialogueChild/AddSubjectChild';
+import AddBranchAndBatchChild from '../../../components/dialogues/dialogueChild/AddBranchAndBatchChild';
 
 const SubjectDetail = () => {
 	const [deleteDialogue, setDeleteDialogue] = useState(false);
@@ -76,6 +79,12 @@ const SubjectDetail = () => {
 				child={<DeleteChild />}
 				open={deleteDialogue}
 				handleClose={handleDeleteClose}
+			/>
+			<BaseDialogue
+				// open\
+				handleClose={() => {}}
+				title="Add Group"
+				child={<AddBranchAndBatchChild />}
 			/>
 		</ThemeProvider>
 	);

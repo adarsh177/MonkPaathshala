@@ -120,23 +120,28 @@ const TeacherTopNav = () => {
 				<img src={Logo} alt="logo" className="top-nav-logo" />
 				<div className="top-nav-content">
 					<div className="nav-content-list">
-						<Select
-							id="outlined-select-subject-native"
-							value={subject}
-							onChange={handleChange}
-							helperText="Please select your subject"
-							variant="outlined"
-							style={{ backgroundColor: '#fff' }}
-						>
-							<MenuItem key="0" value="+  Add Subject" onClick={handleaddSubjectOpen}>
-								+ Add Subject
-							</MenuItem>
-							{subjects.map((option) => (
-								<MenuItem key={option.value} value={option.value}>
-									{option.label}
+						<FormControl variant="outlined" size="small">
+							<Select
+								id="outlined-select-subject-native"
+								value={subject}
+								onChange={handleChange}
+								helperText="Please select your subject"
+								style={{ backgroundColor: '#fff' }}
+							>
+								<MenuItem
+									key="0"
+									value="+  Add Subject"
+									onClick={handleaddSubjectOpen}
+								>
+									+ Add Subject
 								</MenuItem>
-							))}
-						</Select>
+								{subjects.map((option) => (
+									<MenuItem key={option.value} value={option.value}>
+										{option.label}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 					</div>
 					<div className="nav-content-profile">
 						<Button

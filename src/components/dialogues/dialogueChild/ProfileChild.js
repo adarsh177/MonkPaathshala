@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { TextField, Button, makeStyles } from '@material-ui/core';
+import {
+	TextField,
+	Button,
+	makeStyles,
+	FormControl,
+	InputLabel,
+	ListItem,
+	Select,
+} from '@material-ui/core';
 import Logo from '../../../media/logo-100px.png';
 import './ProfileChild.css';
 import theme from '../../../ThemeConfig';
@@ -8,7 +16,7 @@ import { ThemeProvider } from '@material-ui/styles';
 // styling------------------------------------------
 const styles = makeStyles({
 	root: {
-		margin: '10px 0 10px 0',
+		width: '300px',
 	},
 });
 // Material ui dropdown-----------------------------
@@ -68,32 +76,31 @@ export default function ProfileChild() {
 						label="Name"
 						variant="outlined"
 					/>
+					<br />
 					<TextField
 						className="classes.root"
 						id="outlined-basic"
 						label="Email"
 						variant="outlined"
 					/>
-					<TextField
-						className={classes.root}
-						style={{ display: '' }}
-						id="outlined-select-branch-native"
-						select
-						label="Native select"
-						value={branch}
-						onChange={handleChange}
-						SelectProps={{
-							native: true,
-						}}
-						variant="outlined"
-					>
-						{branchs.map((option) => (
-							<option key={option.value} value={option.value}>
-								{option.label}
-							</option>
-						))}
-					</TextField>
-
+					<br />
+					<FormControl variant="outlined">
+						<InputLabel id="profile-branch-select-label">Select Branch</InputLabel>
+						<Select
+							id="profile-branch-select"
+							labelId="profile-branch-select-label"
+							label="Select Branch"
+							value={branch}
+							onChange={handleChange}
+						>
+							{branchs.map((option) => (
+								<ListItem key={option.value} value={option.value}>
+									{option.label}
+								</ListItem>
+							))}
+						</Select>
+					</FormControl>
+					<br />
 					<TextField
 						className={classes.root}
 						style={{ display: '' }}
@@ -101,6 +108,7 @@ export default function ProfileChild() {
 						label="Batch year"
 						variant="outlined"
 					/>
+					<br />
 					<TextField
 						className={classes.root}
 						id="outlined-basic"
