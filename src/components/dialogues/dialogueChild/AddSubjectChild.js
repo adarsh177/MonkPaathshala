@@ -8,6 +8,7 @@ export default function AddSubjectChild() {
 		setValue(event.target.value);
 		console.log(value);
 	};
+
 	return (
 		<div>
 			<TextField
