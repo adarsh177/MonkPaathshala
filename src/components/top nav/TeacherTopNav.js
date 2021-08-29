@@ -22,6 +22,10 @@ import ProfileChild from '../dialogues/dialogueChild/ProfileChild';
 import LogoutChild from '../dialogues/dialogueChild/LogoutChild';
 import AddSubjectChild from '../dialogues/dialogueChild/AddSubjectChild';
 
+import firebase from 'firebase/app';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 const subjects = [
 	{
 		value: 'Maths',
@@ -47,6 +51,8 @@ const TeacherTopNav = () => {
 			margin: theme.spacing(1),
 		},
 	}));
+	const dispatch = useDispatch();
+	const history = useHistory();
 	const classes = useStyles();
 	const [subject, setsubject] = React.useState('Maths');
 
@@ -210,6 +216,10 @@ const TeacherTopNav = () => {
 				child={<LogoutChild />}
 				open={Logout}
 				handleClose={handleLogoutClose}
+				onClick={async () => {
+					await firebase.auth().signOut();
+					window.location = '/';
+				}}
 			/>
 		</div>
 	);

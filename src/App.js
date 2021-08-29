@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import firebase from 'firebase';
 import Teacher from './screen/teacher/Teacher';
+import LoginScreen from './screen/LoginScreen/LoginScreen';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import TeacherStore from './screen/teacher/TeacherStore';
 
 function App() {
-	const [loggedIn, setLoggedIn] = useState(false);
-
-	useEffect(() => {
-		getAuth().onAuthStateChanged((user) => {
-			setLoggedIn(user !== null);
-		});
-	}, []);
-
-	// return <Teacher />;
-
 	return (
-		<div className="App">
-			<div>
-				<Teacher />
-			</div>
-		</div>
+		<Router>
+			<Switch>
+				<Route exact path="/">
+					<LoginScreen />
+				</Route>
+				<Router exact path="/dashboard">
+					<Provider store={TeacherStore}>
+						<Teacher />
+					</Provider>
+				</Router>
+			</Switch>
+		</Router>
 	);
 }
 

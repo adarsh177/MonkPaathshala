@@ -1,9 +1,11 @@
-import FirebaseApp from 'firebase/compat/app';
+import '../firebase';
+import Firebase from 'firebase/app';
 
-const firestore = FirebaseApp.app().firestore();
-const auth = FirebaseApp.app().auth();
+const firebaseApp = Firebase.app();
 
 export async function CreateTeacher() {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		const userInfo = await firestore
 			.collection('Teachers')
@@ -14,7 +16,8 @@ export async function CreateTeacher() {
 			await firestore.collection('Teachers').doc(auth.currentUser.uid).set({
 				userId: auth.currentUser.uid,
 				email: auth.currentUser.email,
-				joinedOn: FirebaseApp.firestore.Timestamp.now(),
+				name: auth.currentUser.displayName,
+				joinedOn: Firebase.firestore.Timestamp.now(),
 			});
 		}
 		return true;
@@ -25,6 +28,8 @@ export async function CreateTeacher() {
 }
 
 export async function UpdateTeacherProfile(name, imageUrl) {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		const userInfo = await firestore.collection('Teachers').doc(auth.currentUser.uid).update({
 			name: name,
@@ -38,9 +43,11 @@ export async function UpdateTeacherProfile(name, imageUrl) {
 }
 
 export async function GetTeacherProfile() {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		const userInfo = await firestore.collection('Teachers').doc(auth.currentUser.uid).get();
-		return userInfo;
+		return userInfo.data();
 	} catch (err) {
 		console.log('UserManagement_GetTeacherProfile', err);
 		return false;
@@ -48,6 +55,8 @@ export async function GetTeacherProfile() {
 }
 
 export async function GetSubjects() {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		const Subjects = await firestore
 			.collection('Subjects')
@@ -61,6 +70,8 @@ export async function GetSubjects() {
 }
 
 export async function AddSubject(subjectName, image) {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		const result = await firestore.collection('Subjects').add({
 			name: subjectName,
@@ -75,12 +86,14 @@ export async function AddSubject(subjectName, image) {
 }
 
 export async function AddGroupToSubject(subjectId, groupId) {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		await firestore
 			.collection('Subjects')
 			.doc(subjectId)
 			.update({
-				groups: FirebaseApp.firestore.FieldValue.arrayUnion(groupId),
+				groups: Firebase.firestore.FieldValue.arrayUnion(groupId),
 			});
 		return true;
 	} catch (err) {
@@ -90,6 +103,8 @@ export async function AddGroupToSubject(subjectId, groupId) {
 }
 
 export async function GetAssignments() {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		const assignments = await firestore
 			.collection('Teachers')
@@ -105,6 +120,8 @@ export async function GetAssignments() {
 }
 
 export async function GetTests() {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
 	try {
 		const assignments = await firestore
 			.collection('Teachers')

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './teacher.scss';
 import TeacherTopNav from '../../components/top nav/TeacherTopNav';
-
+import '../../firebase';
+import firebase from 'firebase/app';
 import Tooltip from '@material-ui/core/Tooltip';
 import HomeIcon from '@material-ui/icons/Home';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -11,18 +12,83 @@ import Home from './Home/Home';
 import Assignment from './Assignment/Assignment';
 import Test from './Test/Test';
 import SubjectDetail from './SubjectDetails/SubjectDetail';
+import { useHistory, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { GetTeacherProfile } from '../../database/TeacherManagement';
 
 const Teacher = () => {
-	const [index, setIndex] = React.useState(0);
+	const history = useHistory();
+	const dispatch = useDispatch();
+	const storeState = useSelector((state) => state);
+	const [currentTab, setCurrentTab] = useState('');
+
+	const GetQueryObj = (str = '') => {
+		const obj = {};
+		str.replace('?', '')
+			.split('&')
+			.forEach((el) => {
+				obj[el.split('=')[0]] = el.split('=')[1];
+			});
+
+		return obj;
+	};
+
+	const changeTabParam = (tabName) => {
+		const param = new URLSearchParams();
+		if (tabName && tabName !== '') {
+			param.append('tab', tabName);
+		}
+		history.push({
+			search: param.toString(),
+		});
+	};
+
+	const getScreen = () => {
+		if (currentTab == 'assignment') return <Assignment />;
+		else if (currentTab == 'test') return <Test />;
+		else if (currentTab == 'subject') return <SubjectDetail />;
+		else return <Home />;
+	};
+
+	useEffect(() => {
+		setCurrentTab(GetQueryObj(history.location.search).tab ?? '');
+
+		const authListener = firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				GetTeacherProfile().then((profile) => {
+					dispatch({
+						type: 'updateProfile',
+						data: profile,
+					});
+				});
+			} else {
+				window.location = '/';
+			}
+			authListener();
+		});
+
+		return history.listen((location) => {
+			setCurrentTab(GetQueryObj(location.search).tab ?? '');
+		});
+	}, []);
+
+	useEffect(() => {
+		changeTabParam(currentTab);
+	}, [currentTab]);
+
+	useEffect(() => {
+		console.log('Profile...', storeState.profile);
+	}, [storeState.profile]);
+
 	return (
 		<div>
 			<TeacherTopNav />
 			<div className="teachers-dashboard">
 				<div className="teacher-side-nav">
 					<div
-						className={`side-nav-item ${index === 0 && 'active-nav'}`}
+						className={`side-nav-item ${currentTab === '' && 'active-nav'}`}
 						onClick={() => {
-							setIndex(0);
+							setCurrentTab('');
 						}}
 					>
 						<Tooltip title="Home" arrow placement="right">
@@ -30,9 +96,9 @@ const Teacher = () => {
 						</Tooltip>
 					</div>
 					<div
-						className={`side-nav-item ${index === 1 && 'active-nav'}`}
+						className={`side-nav-item ${currentTab === 'assignment' && 'active-nav'}`}
 						onClick={() => {
-							setIndex(1);
+							setCurrentTab('assignment');
 						}}
 					>
 						<Tooltip title="Assignment" arrow placement="right">
@@ -40,9 +106,9 @@ const Teacher = () => {
 						</Tooltip>
 					</div>
 					<div
-						className={`side-nav-item ${index === 2 && 'active-nav'}`}
+						className={`side-nav-item ${currentTab === 'test' && 'active-nav'}`}
 						onClick={() => {
-							setIndex(2);
+							setCurrentTab('test');
 						}}
 					>
 						<Tooltip title="Test" arrow placement="right">
@@ -50,9 +116,9 @@ const Teacher = () => {
 						</Tooltip>
 					</div>
 					<div
-						className={`side-nav-item ${index === 3 && 'active-nav'}`}
+						className={`side-nav-item ${currentTab === 'subject' && 'active-nav'}`}
 						onClick={() => {
-							setIndex(3);
+							setCurrentTab('subject');
 						}}
 					>
 						<Tooltip title="Subject" arrow placement="right">
@@ -60,12 +126,7 @@ const Teacher = () => {
 						</Tooltip>
 					</div>
 				</div>
-				<div className="teacher-main">
-					{index === 0 && <Home />}
-					{index === 1 && <Assignment />}
-					{index === 2 && <Test />}
-					{index === 3 && <SubjectDetail />}
-				</div>
+				<div className="teacher-main">{getScreen()}</div>
 			</div>
 		</div>
 	);
