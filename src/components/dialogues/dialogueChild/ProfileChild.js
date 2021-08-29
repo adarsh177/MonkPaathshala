@@ -77,14 +77,14 @@ export default function ProfileChild() {
 						label="Name"
 						variant="outlined"
 					/>
-					<br />
+
 					<TextField
 						className={classes.root}
 						id="outlined-basic"
 						label="Email"
 						variant="outlined"
 					/>
-					<br />
+
 					<FormControl variant="outlined" className={classes.root}>
 						<InputLabel id="profile-branch-select-label">Select Branch</InputLabel>
 						<Select
@@ -101,7 +101,7 @@ export default function ProfileChild() {
 							))}
 						</Select>
 					</FormControl>
-					<br />
+
 					<TextField
 						className={classes.root}
 						style={{ display: '' }}
@@ -109,7 +109,7 @@ export default function ProfileChild() {
 						label="Batch year"
 						variant="outlined"
 					/>
-					<br />
+
 					<TextField
 						className={classes.root}
 						id="outlined-basic"

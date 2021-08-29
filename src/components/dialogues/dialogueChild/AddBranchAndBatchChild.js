@@ -69,8 +69,6 @@ export default function AddBranchAndBatchChild() {
 				</Select>
 			</FormControl>
 
-			<br />
-
 			<FormControl variant="outlined" className={classes.root}>
 				<InputLabel id="add-group-select-year-label">Select Year</InputLabel>
 				<Select
