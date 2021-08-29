@@ -25,24 +25,25 @@ const SubjectDetail = () => {
 	const handleDeleteClose = () => {
 		setDeleteDialogue(false);
 	};
-	const theme = createTheme({
+
+	const theme2 = createTheme({
 		palette: {
 			primary: {
 				main: '#279225',
 			},
-			secondary: {
-				main: '#b20808',
-			},
 		},
 	});
+
 	return (
 		<ThemeProvider theme={theme}>
 			<div classname="subjectdetail">
 				<div className="subject-heading">
 					<Title name="Engineering Economics" />
-					<Button variant="contained" color="primary" className="add-batch">
-						+&nbsp;&nbsp;Add Batch
-					</Button>
+					<ThemeProvider theme={theme2}>
+						<Button variant="contained" color="primary" className="add-batch">
+							+&nbsp;&nbsp;Add Batch
+						</Button>
+					</ThemeProvider>
 				</div>
 				<div className="subject-table">
 					<div className="subject-table-heading">
