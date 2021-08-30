@@ -16,7 +16,7 @@ function App() {
 				</Route>
 				<Router exact path="/dashboard">
 					<Provider store={TeacherStore}>
-						<Student />
+						<Teacher />
 					</Provider>
 				</Router>
 			</Switch>
