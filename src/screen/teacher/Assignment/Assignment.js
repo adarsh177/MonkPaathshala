@@ -94,7 +94,7 @@ const Assignment = () => {
 					open={assignmentDialog}
 					handleClose={assignmentDialogClose}
 				/>
-				<AssignmentDetail name={assignmentEconomics} />
+				{/* <AssignmentDetail name={assignmentEconomics} /> */}
 			</div>
 		</ThemeProvider>
 	);

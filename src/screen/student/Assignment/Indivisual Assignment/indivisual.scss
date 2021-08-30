@@ -24,3 +24,32 @@
 		}
 	}
 }
+
+@media all and (max-width: 780px) {
+	.detail-assignment,
+	.detail-test {
+		padding: 0 18px;
+		.detail-heading {
+			margin: 16px 0 21px 0;
+		}
+		.detail-date,
+		.detail-question,
+		.detail-remaining-time,
+		.detail-submitted-file,
+		.detail-grade {
+			font-size: 16px;
+			margin-bottom: 16px;
+			padding: 5px 0 0 0;
+			b {
+				font-weight: 600;
+			}
+		}
+
+		.detail-action {
+			margin: 32px 0 30px 10px;
+			Button {
+				margin-right: 24px;
+			}
+		}
+	}
+}
