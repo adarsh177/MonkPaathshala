@@ -15,6 +15,8 @@ import {
 	Select,
 	ListItem,
 	makeStyles,
+	useMediaQuery,
+	useTheme,
 } from '@material-ui/core';
 import Logo from '../../media/logo.png';
 import Config from '../../Config.json';
@@ -50,7 +52,6 @@ export default function ProfileDialog(props) {
 			}));
 			return;
 		}
-
 	};
 
 	const onImageSelected = (file) => {
@@ -87,12 +88,17 @@ export default function ProfileDialog(props) {
 		setLocalProfile(storeProfile ? storeProfile : {});
 	}, [storeProfile]);
 
+	// responsive dialog------------------------------------------
+	const theme = useTheme();
+	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
 	return (
 		<Dialog
 			open={props.open}
 			scroll="paper"
 			aria-labelledby="Dialogue"
 			aria-describedby="dialogue-body"
+			fullScreen={fullScreen}
 		>
 			<DialogTitle id="scroll-dialog-title">Profile</DialogTitle>
 			<DialogContent dividers="paper">
