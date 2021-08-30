@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './teacher.scss';
 import TeacherTopNav from '../../components/top nav/TeacherTopNav';
-import '../../firebase';
-import firebase from 'firebase/app';
+import firebase from '../../firebase';
 import Tooltip from '@material-ui/core/Tooltip';
 import HomeIcon from '@material-ui/icons/Home';
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -15,11 +14,13 @@ import SubjectDetail from './SubjectDetails/SubjectDetail';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { GetTeacherProfile } from '../../database/TeacherManagement';
+import { Alert } from '@material-ui/lab';
 
 const Teacher = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const storeState = useSelector((state) => state);
+	const alertInfo = useSelector((state) => state.alertInfo);
 	const [currentTab, setCurrentTab] = useState('');
 
 	const GetQueryObj = (str = '') => {
@@ -80,8 +81,26 @@ const Teacher = () => {
 		console.log('Profile...', storeState.profile);
 	}, [storeState.profile]);
 
+	// autoclose alert
+	useEffect(() => {
+		console.log('AlertInfo', alertInfo);
+		if (alertInfo) {
+			setTimeout(() => {
+				dispatch({
+					type: 'showAlert',
+					data: null,
+				});
+			}, 2000);
+		}
+	}, [alertInfo]);
+
 	return (
 		<div>
+			{alertInfo ? (
+				<Alert className="alert-toast" severity={alertInfo.severity}>
+					{alertInfo.text}
+				</Alert>
+			) : null}
 			<TeacherTopNav />
 			<div className="teachers-dashboard">
 				<div className="teacher-side-nav">

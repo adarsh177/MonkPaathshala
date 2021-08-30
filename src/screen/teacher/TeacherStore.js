@@ -1,10 +1,12 @@
+import { useDispatch } from 'react-redux';
 import { createStore } from 'redux';
 
 const initialState = {
 	profile: {},
-	subjects: [],
+	subjects: null,
 	selectedSubject: null,
 	userType: 'teacher',
+	alertInfo: null, // {severity: '', text}
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,6 +28,11 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				selectedSubject: action.data,
+			};
+		case 'showAlert':
+			return {
+				...state,
+				alertInfo: action.data,
 			};
 		default:
 			return state;

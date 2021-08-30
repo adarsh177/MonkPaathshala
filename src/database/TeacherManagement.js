@@ -1,7 +1,5 @@
-import '../firebase';
-import Firebase from 'firebase/app';
-
-const firebaseApp = Firebase.app();
+import Firebase from 'firebase';
+import firebaseApp from '../firebase';
 
 export async function CreateTeacher() {
 	const firestore = firebaseApp.firestore();
@@ -31,10 +29,13 @@ export async function UpdateTeacherProfile(name, imageUrl) {
 	const firestore = firebaseApp.firestore();
 	const auth = firebaseApp.auth();
 	try {
-		const userInfo = await firestore.collection('Teachers').doc(auth.currentUser.uid).update({
-			name: name,
-			image: imageUrl,
-		});
+		const userInfo = await firestore
+			.collection('Teachers')
+			.doc(auth.currentUser.uid)
+			.update({
+				name: name,
+				image: imageUrl ? imageUrl : null,
+			});
 		return true;
 	} catch (err) {
 		console.log('UserManagement_UpdateTeacherProfile', err);
@@ -62,25 +63,38 @@ export async function GetSubjects() {
 			.collection('Subjects')
 			.where('teacherId', '==', auth.currentUser.uid)
 			.get();
-		return Subjects.docs;
+		return Subjects.docs.map((doc) => doc.data());
 	} catch (err) {
 		console.log('UserManagement_GetSubjects', err);
 		return false;
 	}
 }
 
-export async function AddSubject(subjectName, image) {
+export async function AddSubject(subjectName) {
 	const firestore = firebaseApp.firestore();
 	const auth = firebaseApp.auth();
 	try {
-		const result = await firestore.collection('Subjects').add({
+		const push = firestore.collection('Subjects').doc();
+		const result = await push.set({
 			name: subjectName,
 			teacherId: auth.currentUser.uid,
-			image: image,
+			subjectId: push.id,
 		});
-		return result.id;
+		return push.id;
 	} catch (err) {
 		console.log('UserManagement_GetSubjects', err);
+		return false;
+	}
+}
+
+export async function DeleteSubject(subjectId) {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
+	try {
+		await firestore.collection('Subjects').doc(subjectId).delete();
+		return true;
+	} catch (err) {
+		console.log('UserManagement_DeleteSubject', err);
 		return false;
 	}
 }
@@ -94,6 +108,23 @@ export async function AddGroupToSubject(subjectId, groupId) {
 			.doc(subjectId)
 			.update({
 				groups: Firebase.firestore.FieldValue.arrayUnion(groupId),
+			});
+		return true;
+	} catch (err) {
+		console.log('UserManagement_GetSubjects', err);
+		return false;
+	}
+}
+
+export async function RemoveGroupFromSubject(subjectId, groupId) {
+	const firestore = firebaseApp.firestore();
+	const auth = firebaseApp.auth();
+	try {
+		await firestore
+			.collection('Subjects')
+			.doc(subjectId)
+			.update({
+				groups: Firebase.firestore.FieldValue.arrayRemove(groupId),
 			});
 		return true;
 	} catch (err) {

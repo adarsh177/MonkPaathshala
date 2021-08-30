@@ -2,7 +2,8 @@ import '../../firebase';
 import { Card, Paper, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
+import Firebase from 'firebase';
+import firebase from '../../firebase';
 import './LoginScreen.scss';
 import { useHistory } from 'react-router-dom';
 import { CreateTeacher } from '../../database/TeacherManagement';
@@ -45,11 +46,11 @@ function LoginScreen(props) {
 		signInSuccessUrl: false,
 		signInOptions: [
 			{
-				provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+				provider: Firebase.auth.GoogleAuthProvider.PROVIDER_ID,
 				requireDisplayName: true,
 			},
 			{
-				provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+				provider: Firebase.auth.EmailAuthProvider.PROVIDER_ID,
 				requireDisplayName: true,
 			},
 		],

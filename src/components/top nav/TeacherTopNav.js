@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../../media/logo.png';
 import './topnav.scss';
 import { Button, Select, TextField, InputLabel, FormControl } from '@material-ui/core';
@@ -11,6 +11,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import firebase from '../../firebase';
 
 //Base Dialog components -------------------------------------------------
 
@@ -18,14 +19,12 @@ import BaseDialogue from '../dialogues/BaseDialogue';
 import ConfirmationBaseDialog from '../dialogues/ConfirmationBaseDialog';
 
 // Child dialoge components ---------------------------------------------
-import ProfileChild from '../dialogues/dialogueChild/ProfileChild';
 import LogoutChild from '../dialogues/dialogueChild/LogoutChild';
-import AddSubjectChild from '../dialogues/dialogueChild/AddSubjectChild';
-
-import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileDialog from '../dialogues/ProfileDialog';
+import { GetSubjects } from '../../database/TeacherManagement';
+import AddSubjectDialogue from '../dialogues/AddSubjectDialog';
 
 const subjects = [
 	{
@@ -53,12 +52,19 @@ const TeacherTopNav = () => {
 		},
 	}));
 	const dispatch = useDispatch();
-	const history = useHistory();
-	const classes = useStyles();
-	const [subject, setsubject] = React.useState('Maths');
+	const subjects = useSelector((state) => state.subjects);
+	const selectedSubject = useSelector((state) => state.selectedSubject);
 
 	const handleChange = (event) => {
-		setsubject(event.target.value);
+		if (event.target.value === 'add') {
+			// add new dialog
+			setAddSubject(true);
+			return;
+		}
+		dispatch({
+			type: 'updateSelectedSubject',
+			data: event.target.value,
+		});
 	};
 
 	//material-ui profile Dropdown ------------------------
@@ -114,12 +120,29 @@ const TeacherTopNav = () => {
 	};
 	// states for add Subject dialog ---------------------------
 	const [addSubject, setAddSubject] = useState(false);
-	const handleaddSubjectOpen = () => {
-		setAddSubject(true);
-	};
-	const handleaddSubjectClose = () => {
-		setAddSubject(false);
-	};
+
+	useEffect(() => {
+		if (subjects === null) {
+			// loading subjects
+			GetSubjects()
+				.then((subs) => {
+					console.log('Subs', subs);
+					if (subs.length > 0) {
+						dispatch({
+							type: 'updateSelectedSubject',
+							data: subs[0].subjectId,
+						});
+					}
+					dispatch({
+						type: 'updateSubjectList',
+						data: subs,
+					});
+				})
+				.catch((err) => {
+					console.log('Error loading subs', err);
+				});
+		}
+	}, [subjects]);
 
 	return (
 		<div>
@@ -130,23 +153,33 @@ const TeacherTopNav = () => {
 						<FormControl style={{ width: '150px' }} variant="outlined" size="small">
 							<Select
 								id="outlined-select-subject-native"
-								value={subject}
+								value={
+									subjects === null || subjects.length === 0
+										? 'select'
+										: selectedSubject
+								}
+								placeholder="Select Subject"
 								onChange={handleChange}
-								helperText="Please select your subject"
 								style={{ backgroundColor: '#fff' }}
 							>
-								<MenuItem
-									key="0"
-									value="+  Add Subject"
-									onClick={handleaddSubjectOpen}
-								>
-									+ Add Subject
-								</MenuItem>
-								{subjects.map((option) => (
-									<MenuItem key={option.value} value={option.value}>
-										{option.label}
+								{subjects === null || subjects.length === 0 ? (
+									<MenuItem key="select" value="select">
+										Select Subject
 									</MenuItem>
-								))}
+								) : null}
+								<MenuItem key="0" value="add">
+									+ New Subject
+								</MenuItem>
+								{subjects
+									? subjects.map((option) => (
+											<MenuItem
+												key={option.subjectId}
+												value={option.subjectId}
+											>
+												{option.name}
+											</MenuItem>
+									  ))
+									: null}
 							</Select>
 						</FormControl>
 					</div>
@@ -199,17 +232,9 @@ const TeacherTopNav = () => {
 				</div>
 			</div>
 
-			<BaseDialogue
-				title="Subject"
-				child={<AddSubjectChild />}
-				open={addSubject}
-				handleClose={handleaddSubjectClose}
-			/>
+			<AddSubjectDialogue open={addSubject} handleClose={() => setAddSubject(false)} />
 
-			<ProfileDialog
-				open={profile}
-				handleClose={handleProfileClose}
-			/>
+			<ProfileDialog open={profile} handleClose={handleProfileClose} />
 			<ConfirmationBaseDialog
 				action="Logout"
 				child={<LogoutChild />}

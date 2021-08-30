@@ -21,6 +21,7 @@ import Config from '../../Config.json';
 import { GetInputImageData } from '../../Utils';
 import '../../firebase';
 import firebase from 'firebase/app';
+import { UpdateTeacherProfile } from '../../database/TeacherManagement';
 
 const styles = makeStyles({
 	root: {
@@ -35,13 +36,19 @@ export default function ProfileDialog(props) {
 	const storeProfile = useSelector((state) => state.profile);
 	const [localProfile, setLocalProfile] = useState({});
 	const [profilePicLoading, setProfilePicLoading] = useState(false);
+	const [profileSaving, setProfileSaving] = useState(false);
 	const [fieldErrors, setFieldErrors] = useState({});
 
 	const dispatch = useDispatch();
 	const classes = styles();
 
-	const onSavePressedTeacher = (ev) => {
+	const onSavePressed = (ev) => {
 		if (ev) ev.preventDefault();
+		if (userType === 'student') {
+			// handle student save
+
+			return;
+		}
 
 		if (!localProfile.name || localProfile.name.length < 3) {
 			setFieldErrors((err) => ({
@@ -51,6 +58,45 @@ export default function ProfileDialog(props) {
 			return;
 		}
 
+		setProfileSaving(true);
+		UpdateTeacherProfile(localProfile.name, localProfile.image)
+			.then((bool) => {
+				if (!bool) {
+					dispatch({
+						type: 'showAlert',
+						data: {
+							severity: 'error',
+							text: 'Error saving profile',
+						},
+					});
+					return;
+				}
+				dispatch({
+					type: 'updateProfile',
+					data: {
+						name: localProfile.name,
+						image: localProfile.image ? localProfile.image : null,
+					},
+				});
+				dispatch({
+					type: 'showAlert',
+					data: {
+						severity: 'success',
+						text: 'Profile saved successfully',
+					},
+				});
+				props.handleClose();
+			})
+			.catch((err) => {
+				dispatch({
+					type: 'showAlert',
+					data: {
+						severity: 'error',
+						text: 'Error saving profile',
+					},
+				});
+			})
+			.finally(() => setProfileSaving(false));
 	};
 
 	const onImageSelected = (file) => {
@@ -94,7 +140,9 @@ export default function ProfileDialog(props) {
 			aria-labelledby="Dialogue"
 			aria-describedby="dialogue-body"
 		>
-			<DialogTitle id="scroll-dialog-title">Profile</DialogTitle>
+			<DialogTitle id="scroll-dialog-title">
+				{userType === 'student' ? 'Student' : 'Teacher'}'s Profile
+			</DialogTitle>
 			<DialogContent dividers="paper">
 				<ThemeProvider theme={theme}>
 					<div className="ProfileDialog">
@@ -149,7 +197,7 @@ export default function ProfileDialog(props) {
 								InputLabelProps={{ shrink: true }}
 							/>
 
-							{userType !== 'student' && (
+							{userType === 'student' && (
 								<Fragment>
 									<FormControl
 										error={fieldErrors.branchField}
@@ -226,7 +274,7 @@ export default function ProfileDialog(props) {
 				<Button onClick={props.handleClose} variant="contained" color="secondary">
 					DISCARD
 				</Button>
-				<Button onClick={onSavePressedTeacher} variant="contained" color="primary">
+				<Button onClick={onSavePressed} variant="contained" color="primary">
 					SAVE
 				</Button>
 			</DialogActions>
