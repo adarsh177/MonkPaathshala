@@ -18,17 +18,21 @@ import {
 } from '@material-ui/core';
 import Title from '../../../../components/Title/Title';
 import { createTheme } from '@material-ui/core/styles';
+import TeacherTopNav from '../../../../components/top nav/TeacherTopNav';
 
 const AssignmentDetail = (prop) => {
 	return (
-		<AssignmentDetailProp
-			topic={prop.name.topic}
-			startDate={prop.name.startDate}
-			endDate={prop.name.endDate}
-			question={prop.name.question}
-			totalSubmissions={prop.name.totalSubmissions}
-			submission={prop.name.submission}
-		/>
+		<>
+			<TeacherTopNav />
+			<AssignmentDetailProp
+				topic={prop.name.topic}
+				startDate={prop.name.startDate}
+				endDate={prop.name.endDate}
+				question={prop.name.question}
+				totalSubmissions={prop.name.totalSubmissions}
+				submission={prop.name.submission}
+			/>
+		</>
 	);
 };
 

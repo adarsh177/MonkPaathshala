@@ -16,3 +16,27 @@
 		align-items: center;
 	}
 }
+
+@media all and (max-width: 780px) {
+	.teacher-top-nav,
+	.student-top-nav {
+		height: 40px;
+		.top-nav-logo {
+			height: 32px;
+		}
+		.top-nav-content {
+			display: flex;
+			align-items: center;
+		}
+		.MuiSelect-selectMenu {
+			font-size: 13px;
+
+			padding-top: 4px;
+
+			padding-bottom: 4px;
+		}
+		.MuiMenuItem-root {
+			font-size: 12px;
+		}
+	}
+}

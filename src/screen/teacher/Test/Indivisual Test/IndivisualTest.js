@@ -13,18 +13,22 @@ import {
 } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import Title from '../../../../components/Title/Title';
+import TeacherTopNav from '../../../../components/top nav/TeacherTopNav';
 
 const IndivisualTest = (prop) => {
 	return (
-		<IndivisualTestProp
-			topic={prop.name.topic}
-			startDate={prop.name.startDate}
-			endDate={prop.name.endDate}
-			question={prop.name.question}
-			totalAppearedStudents={prop.name.totalAppearedStudents}
-			submissionDateTime={prop.name.submissionDateTime}
-			submission={prop.name.submission}
-		/>
+		<>
+			<TeacherTopNav />
+			<IndivisualTestProp
+				topic={prop.name.topic}
+				startDate={prop.name.startDate}
+				endDate={prop.name.endDate}
+				question={prop.name.question}
+				totalAppearedStudents={prop.name.totalAppearedStudents}
+				submissionDateTime={prop.name.submissionDateTime}
+				submission={prop.name.submission}
+			/>
+		</>
 	);
 };
 const IndivisualTestProp = (props) => {

@@ -4,16 +4,20 @@ import { Button, ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import Title from '../../../../components/Title/Title';
 import './indivisual.scss';
+import StudentTopNav from '../../../../components/top nav/StudentTopNav';
 
 const IndivisualAssignment = (prop) => {
 	return (
-		<IndivisualAssignmentProp
-			topic={prop.name.topic}
-			startDate={prop.name.startDate}
-			endDate={prop.name.endDate}
-			question={prop.name.question}
-			grade={prop.name.grade}
-		/>
+		<>
+			<StudentTopNav />
+			<IndivisualAssignmentProp
+				topic={prop.name.topic}
+				startDate={prop.name.startDate}
+				endDate={prop.name.endDate}
+				question={prop.name.question}
+				grade={prop.name.grade}
+			/>
+		</>
 	);
 };
 

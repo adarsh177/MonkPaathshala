@@ -10,11 +10,8 @@
 		background-color: $lightblue;
 		padding-top: 10vh;
 		color: $white;
-		.active-nav {
-			border-left: 3px solid $white;
-		}
 		.side-nav-item {
-			width: 100%;
+			width: 60px;
 			padding: 5px 0;
 			text-align: center;
 			margin-bottom: 20px;
@@ -25,11 +22,53 @@
 				font-size: 2.1rem;
 			}
 		}
+		.active-nav {
+			border-left: 3.6px solid $white;
+			width: 56.4px;
+		}
 	}
 	.student-main {
 		max-height: 92-3vh;
 		overflow: auto;
 		padding: 0 32px;
 		padding-top: 3vh;
+	}
+}
+
+@media all and (max-width: 780px) {
+	.students-dashboard {
+		grid-template-columns: 1fr;
+		.student-side-nav {
+			position: fixed;
+
+			bottom: 0;
+
+			width: 100%;
+			flex-direction: row;
+			align-items: center;
+			height: 40px;
+			padding-top: 0;
+			font-size: 10px;
+			.side-nav-item {
+				width: 100%;
+				padding: 0;
+				margin-bottom: 0;
+				height: 40px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				.MuiSvgIcon-root {
+					font-size: 1.4rem;
+				}
+			}
+			.active-nav {
+				border-left: 0;
+				border-bottom: 3.6px solid $white;
+				height: 36.4px;
+			}
+		}
+		.student-main {
+			max-height: none;
+		}
 	}
 }

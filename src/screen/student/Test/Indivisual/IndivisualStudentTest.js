@@ -3,16 +3,20 @@ import theme from '../../../../ThemeConfig';
 import { Button, ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import Title from '../../../../components/Title/Title';
+import StudentTopNav from '../../../../components/top nav/StudentTopNav';
 
 const IndivisualStudentTest = (prop) => {
 	return (
-		<IndivisualStudentTestProp
-			topic={prop.name.topic}
-			startDate={prop.name.startDate}
-			endDate={prop.name.endDate}
-			question={prop.name.question}
-			grade={prop.name.grade}
-		/>
+		<>
+			<StudentTopNav />
+			<IndivisualStudentTestProp
+				topic={prop.name.topic}
+				startDate={prop.name.startDate}
+				endDate={prop.name.endDate}
+				question={prop.name.question}
+				grade={prop.name.grade}
+			/>
+		</>
 	);
 };
 const IndivisualStudentTestProp = (props) => {
