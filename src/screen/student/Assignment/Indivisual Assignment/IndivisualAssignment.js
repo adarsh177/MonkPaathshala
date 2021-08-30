@@ -55,11 +55,23 @@ const IndivisualAssignmentProp = (props) => {
 				<ThemeProvider theme={theme2}>
 					<div className="detail-action">
 						<Button variant="contained" color="primary" onClick={() => {}}>
-							Edit Submission
+							<label for="editAssignmentsubmission">Edit Submission</label>
 						</Button>
+						<input
+							type="file"
+							accept=".pdf,.doc,.docx"
+							id="editAssignmentsubmission"
+							style={{ display: 'none' }}
+						/>
 						<Button variant="contained" color="secondary" onClick={() => {}}>
-							Upload File
+							<label for="UploadAssignmentFile">Upload File</label>
 						</Button>
+						<input
+							type="file"
+							accept=".pdf,.doc,.docx"
+							id="UploadAssignmentFile"
+							style={{ display: 'none' }}
+						/>
 					</div>
 				</ThemeProvider>
 			</div>

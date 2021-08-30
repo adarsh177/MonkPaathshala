@@ -1,6 +1,6 @@
 import React from 'react';
 import theme from '../../../../ThemeConfig';
-import { Button, ThemeProvider } from '@material-ui/core';
+import { Button, TextField, ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import Title from '../../../../components/Title/Title';
 import StudentTopNav from '../../../../components/top nav/StudentTopNav';
@@ -56,11 +56,23 @@ const IndivisualStudentTestProp = (props) => {
 				<ThemeProvider theme={theme2}>
 					<div className="detail-action">
 						<Button variant="contained" color="primary" onClick={() => {}}>
-							Edit Submission
+							<label for="editTestsubmission">Edit Submission</label>
 						</Button>
+						<input
+							type="file"
+							accept=".pdf,.doc,.docx"
+							id="editTestsubmission"
+							style={{ display: 'none' }}
+						/>
 						<Button variant="contained" color="secondary" onClick={() => {}}>
-							Upload File
+							<label for="UploadTestFile">Upload File</label>
 						</Button>
+						<input
+							type="file"
+							accept=".pdf,.doc,.docx"
+							id="UploadTestFile"
+							style={{ display: 'none' }}
+						/>
 					</div>
 				</ThemeProvider>
 			</div>
