@@ -1,0 +1,10 @@
+{
+	"branches": {
+		"cs": "Computer Sciences",
+		"ec": "Electronics",
+		"mech": "Mechanical",
+		"ai": "Artificial Intelligence",
+		"ml": "Machine Learning"
+	},
+	"years": [2018, 2019, 2020, 2021]
+}

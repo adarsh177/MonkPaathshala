@@ -25,6 +25,7 @@ import AddSubjectChild from '../dialogues/dialogueChild/AddSubjectChild';
 import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import ProfileDialog from '../dialogues/ProfileDialog';
 
 const subjects = [
 	{
@@ -205,9 +206,7 @@ const TeacherTopNav = () => {
 				handleClose={handleaddSubjectClose}
 			/>
 
-			<BaseDialogue
-				title="Profile"
-				child={<ProfileChild />}
+			<ProfileDialog
 				open={profile}
 				handleClose={handleProfileClose}
 			/>
