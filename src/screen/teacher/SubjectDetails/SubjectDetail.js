@@ -57,10 +57,13 @@ const SubjectDetail = () => {
 		setaddBatchDialogue(false);
 	};
 
-	const theme = createTheme({
+	const theme2 = createTheme({
 		palette: {
 			primary: {
 				main: '#279225',
+			},
+			secondary: {
+				main: '#b20808',
 			},
 		},
 	});
@@ -70,7 +73,7 @@ const SubjectDetail = () => {
 			<div classname="subjectdetail">
 				<div className="subject-heading">
 					<Title name="Engineering Economics" />
-					<ThemeProvider theme={theme}>
+					<ThemeProvider theme={theme2}>
 						<Button
 							variant="contained"
 							color="primary"
