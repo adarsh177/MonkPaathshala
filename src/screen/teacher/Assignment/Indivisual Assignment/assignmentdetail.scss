@@ -33,7 +33,10 @@
 			margin-bottom: 16px;
 		}
 		.list-of-submissions {
-			width: 90%;
+			width: 95%;
+			.MuiTableCell-root-81 {
+				font-size: 18px;
+			}
 		}
 	}
 	.detail-action {
@@ -61,30 +64,33 @@
 		.detail-question {
 			font-size: 16px;
 			margin-bottom: 16px;
-			padding: 0 10px;
+			padding: 5px 0 0 0;
 		}
 		.detail-total-submission {
-			font-size: 18px;
-			margin-bottom: 27px;
-			padding: 0 10px;
+			font-size: 16px;
+			margin-bottom: 16px;
+			padding: 5px 0 0 0;
 			b {
 				font-weight: 600;
 			}
 		}
 		.detail-submission-list {
-			padding: 0 10px;
-			font-size: 18px;
-			margin-bottom: 27px;
+			font-size: 16px;
+			margin-bottom: 16px;
+			padding: 5px 0 0 0;
 			.list-title {
 				font-weight: 600;
 				margin-bottom: 16px;
 			}
 			.list-of-submissions {
 				width: 90%;
+				.MuiTableCell-root-81 {
+					font-size: 14px;
+				}
 			}
 		}
 		.detail-action {
-			margin: 70px 0px 30px 10px;
+			margin: 32px 0px 30px 10px;
 			display: flex;
 			justify-content: flex-end;
 			Button {
