@@ -73,7 +73,7 @@ const Test = () => {
 					})}
 				</div>
 			</div>
-			<IndivisualStudentTest name={endSem} />
+			{/* <IndivisualStudentTest name={endSem} /> */}
 		</ThemeProvider>
 	);
 };
