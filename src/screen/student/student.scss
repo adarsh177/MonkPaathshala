@@ -40,7 +40,7 @@
 		grid-template-columns: 1fr;
 		.student-side-nav {
 			position: fixed;
-
+			z-index: 1;
 			bottom: 0;
 
 			width: 100%;
@@ -68,7 +68,9 @@
 			}
 		}
 		.student-main {
+			z-index: 0;
 			max-height: none;
+			padding: 20px 18px 70px 18px;
 		}
 	}
 }

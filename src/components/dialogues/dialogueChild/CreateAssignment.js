@@ -14,55 +14,60 @@ function CreateAssignment() {
 		container: {
 			display: 'flex',
 			flexDirection: 'column',
+			flexWrap: 'wrap',
 		},
 		textField: {
 			marginLeft: theme.spacing(1),
 			marginRight: theme.spacing(1),
-			width: 500,
-			margin: '10px 0',
+			margin: '10px',
 		},
 	}));
+
 	const classes = useStyles();
 	return (
 		<div className={classes.container}>
-			<TextField
-				id="outlined-basic"
-				label="Topic"
-				variant="outlined"
-				className={classes.textField}
-			/>
-			<br />
+			<div>
+				<TextField
+					id="outlined-basic"
+					label="Topic"
+					variant="outlined"
+					className={classes.textField}
+					fullWidth
+				/>
 
-			<TextField
-				id="outlined-multiline-static"
-				label="Question"
-				multiline
-				rows={6}
-				variant="outlined"
-				className={classes.textField}
-			/>
-			<br />
-			<TextField
-				id="date"
-				label="Start Date"
-				type="date"
-				variant="outlined"
-				InputLabelProps={{
-					shrink: true,
-				}}
-				className={classes.textField}
-			/>
+				<TextField
+					id="outlined-multiline-static"
+					label="Question"
+					multiline
+					rows={6}
+					variant="outlined"
+					className={classes.textField}
+					fullWidth
+				/>
+				<TextField
+					id="date"
+					label="Start Date"
+					type="date"
+					variant="outlined"
+					InputLabelProps={{
+						shrink: true,
+					}}
+					className={classes.textField}
+					fullWidth
+				/>
 
-			<TextField
-				id="date"
-				label="End Date"
-				type="date"
-				variant="outlined"
-				InputLabelProps={{
-					shrink: true,
-				}}
-				className={classes.textField}
-			/>
+				<TextField
+					id="date"
+					label="End Date"
+					type="date"
+					variant="outlined"
+					InputLabelProps={{
+						shrink: true,
+					}}
+					className={classes.textField}
+					fullWidth
+				/>
+			</div>
 		</div>
 	);
 }

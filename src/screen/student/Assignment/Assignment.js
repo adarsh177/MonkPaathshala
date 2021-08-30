@@ -61,7 +61,7 @@ const Assignment = () => {
 					);
 				})}
 			</div>
-			<IndivisualAssignment name={economicsAssignment} />
+			{/* <IndivisualAssignment name={economicsAssignment} /> */}
 		</div>
 	);
 };

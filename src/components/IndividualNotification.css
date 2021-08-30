@@ -1,0 +1,11 @@
+.notifiactionContainer {
+	text-align: left;
+	padding: 10px;
+}
+.notifiactionContainer h3 {
+	line-height: 20px;
+	margin: 0 auto;
+}
+.notifiactionContainer p {
+	line-height: 15px;
+}
