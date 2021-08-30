@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import './assignment.scss';
-import { assignmentEconomics } from './Indivisual Assignment/indivisual-data';
+import React from 'react';
+import { endSem } from './Indivisual/indivisualstudentdata';
+
+import theme from '../../../ThemeConfig';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Title from '../../../components/Title/Title';
 import { Button, ThemeProvider } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import { assignment } from './assignment-data';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import BaseDialogue from '../../../components/dialogues/BaseDialogue';
-import CreateAssignment from '../../../components/dialogues/dialogueChild/CreateAssignment';
-import AssignmentDetail from './Indivisual Assignment/AssignmentDetail';
-import theme from '../../../ThemeConfig';
-const Assignment = () => {
+import Title from '../../../components/Title/Title';
+import { test } from '../../teacher/Test/test-data';
+import IndivisualStudentTest from './Indivisual/IndivisualStudentTest';
+const Test = () => {
 	const [index, setIndex] = React.useState(0);
 	const theme2 = createTheme({
 		palette: {
@@ -24,27 +22,13 @@ const Assignment = () => {
 			},
 		},
 	});
-	const [assignmentDialog, setassignmentDialog] = useState(false);
-
-	const assignmentDialogOpen = () => {
-		setassignmentDialog(true);
-	};
-	const assignmentDialogClose = () => {
-		setassignmentDialog(false);
-	};
-
 	return (
 		<ThemeProvider theme={theme}>
-			<div className="assignment">
-				<div className="assignment-heading">
-					<Title name="Assignments" />
-					<ThemeProvider theme={theme2}>
-						<Button variant="contained" color="primary" onClick={assignmentDialogOpen}>
-							+&nbsp;&nbsp;Add Assignment
-						</Button>
-					</ThemeProvider>
+			<div className="test">
+				<div className="test-heading">
+					<Title name="Test" />
 				</div>
-				<div className="assignment-tab">
+				<div className="test-tab">
 					<Button
 						className={`tab-item ${index === 0 && 'active-change'}`}
 						onClick={() => {
@@ -64,10 +48,10 @@ const Assignment = () => {
 						&nbsp;&nbsp;Completed
 					</Button>
 				</div>
-				<div className="assignment-list">
-					{assignment.map((details) => {
+				<div className="test-list">
+					{test.map((details) => {
 						return (
-							<div className="assignment-list-item">
+							<div className="test-list-item">
 								<div className="topic">
 									<b>Topic:</b>&nbsp;{details.topic}
 								</div>
@@ -88,16 +72,10 @@ const Assignment = () => {
 						);
 					})}
 				</div>
-				<BaseDialogue
-					title="Assignment"
-					child={<CreateAssignment />}
-					open={assignmentDialog}
-					handleClose={assignmentDialogClose}
-				/>
-				{/* <AssignmentDetail name={assignmentEconomics} /> */}
 			</div>
+			<IndivisualStudentTest name={endSem} />
 		</ThemeProvider>
 	);
 };
 
-export default Assignment;
+export default Test;

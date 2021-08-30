@@ -1,0 +1,25 @@
+.detail-assignment,
+.detail-test {
+	.detail-heading {
+		margin: 20px 0 30px 0;
+	}
+	.detail-date,
+	.detail-question,
+	.detail-remaining-time,
+	.detail-submitted-file,
+	.detail-grade {
+		font-size: 18px;
+		padding: 0 10px;
+		margin-bottom: 27px;
+		b {
+			font-weight: 600;
+		}
+	}
+
+	.detail-action {
+		margin: 40px 0 30px 10px;
+		Button {
+			margin-right: 24px;
+		}
+	}
+}

@@ -1,0 +1,35 @@
+@import '../../variable';
+.students-dashboard {
+	display: grid;
+	grid-template-columns: 60px auto;
+	.student-side-nav {
+		display: flex;
+		height: 82vh;
+		flex-direction: column;
+		align-items: center;
+		background-color: $lightblue;
+		padding-top: 10vh;
+		color: $white;
+		.active-nav {
+			border-left: 3px solid $white;
+		}
+		.side-nav-item {
+			width: 100%;
+			padding: 5px 0;
+			text-align: center;
+			margin-bottom: 20px;
+			&:hover {
+				background-color: $hover;
+			}
+			.MuiSvgIcon-root {
+				font-size: 2.1rem;
+			}
+		}
+	}
+	.student-main {
+		max-height: 92-3vh;
+		overflow: auto;
+		padding: 0 32px;
+		padding-top: 3vh;
+	}
+}
