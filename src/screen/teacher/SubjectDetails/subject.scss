@@ -7,30 +7,8 @@
 }
 .subject-table {
 	margin-top: 32px;
-	.subject-table-heading,
-	.subject-table-content {
-		display: grid;
-		grid-template-columns: 25% auto 15%;
-		// justify-content: space-between;
-
-		border: 2px solid $border;
-
-		padding: 10px 36px;
-
-		font-size: 1.2em;
-
-		font-weight: 600;
-		text-align: center;
-		.table-heading-item,
-		.table-content-item {
-			&:nth-child(1) {
-				text-align: left;
-				padding-left: 36px;
-			}
-		}
-	}
-	.subject-table-content {
-		font-weight: 500;
+	.MuiTableCell-root {
+		font-size: 18px;
 	}
 }
 .delete-subject-button {
@@ -40,8 +18,19 @@
 }
 
 @media all and (max-width: 780px) {
-	.MuiButton-root {
-		padding: 5px 12px;
-		font-size: 0.65rem;
+	.subject-table {
+		margin-top: 18px;
+		.MuiTableCell-root {
+			font-size: 14px;
+		}
+	}
+}
+@media all and (max-width: 500px) {
+	.subject-heading {
+		flex-direction: column;
+		align-items: flex-start;
+		.heading {
+			margin-bottom: 14px;
+		}
 	}
 }

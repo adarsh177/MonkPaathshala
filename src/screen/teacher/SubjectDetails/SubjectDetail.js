@@ -85,38 +85,44 @@ const SubjectDetail = () => {
 					</ThemeProvider>
 				</div>
 				<br />
-				<TableContainer component={Paper}>
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell>Batch</TableCell>
-								<TableCell>No. of Students</TableCell>
-								<TableCell>Action</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{subjectDetailData.map((details) => {
-								return (
-									<TableRow>
-										<TableCell>
-											{details.branch}&nbsp;{details.batchyear}
-										</TableCell>
-										<TableCell>{details.students}</TableCell>
-										<TableCell>
-											<Button
-												className="table-content-item"
-												onClick={handleDeleteOpen}
-												color="secondary"
-											>
-												<DeleteIcon />
-											</Button>
-										</TableCell>
-									</TableRow>
-								);
-							})}
-						</TableBody>
-					</Table>
-				</TableContainer>
+				<div className="subject-table">
+					<TableContainer component={Paper}>
+						<Table>
+							<TableHead>
+								<TableRow>
+									<TableCell>Batch</TableCell>
+									<TableCell style={{ textAlign: 'center' }}>
+										No. of Students
+									</TableCell>
+									<TableCell style={{ textAlign: 'center' }}>Action</TableCell>
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{subjectDetailData.map((details) => {
+									return (
+										<TableRow>
+											<TableCell>
+												{details.branch}&nbsp;{details.batchyear}
+											</TableCell>
+											<TableCell style={{ textAlign: 'center' }}>
+												{details.students}
+											</TableCell>
+											<TableCell style={{ textAlign: 'center' }}>
+												<Button
+													className="table-content-item"
+													onClick={handleDeleteOpen}
+													color="secondary"
+												>
+													<DeleteIcon />
+												</Button>
+											</TableCell>
+										</TableRow>
+									);
+								})}
+							</TableBody>
+						</Table>
+					</TableContainer>
+				</div>
 				<div className="delete-subject-button">
 					<Button variant="contained" color="secondary" onClick={handleDeleteSubjectOpen}>
 						Delete Subject
