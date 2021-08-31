@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './assignment.scss';
 import { assignmentEconomics } from './Indivisual Assignment/indivisual-data';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -8,12 +8,16 @@ import { createTheme } from '@material-ui/core/styles';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { assignment } from './assignment-data';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import BaseDialogue from '../../../components/dialogues/BaseDialogue';
-import CreateAssignment from '../../../components/dialogues/dialogueChild/CreateAssignment';
 import AssignmentDetail from './Indivisual Assignment/AssignmentDetail';
 import theme from '../../../ThemeConfig';
+import CreateAssignmentDialogue from '../../../components/dialogues/CreateAssignmentDialog';
+import { GetFinishedAssignments, GetOngoingAssignments } from '../../../database/TeacherManagement';
+import { useSelector } from 'react-redux';
 const Assignment = () => {
 	const [index, setIndex] = React.useState(0);
+	const [ongoingAssignments, setOngoingAssignments] = useState([]);
+	const [finishedAssignments, setFinishedssignments] = useState([]);
+	const selectedSubject = useSelector((state) => state.selectedSubject);
 	const theme2 = createTheme({
 		palette: {
 			primary: {
@@ -26,12 +30,20 @@ const Assignment = () => {
 	});
 	const [assignmentDialog, setassignmentDialog] = useState(false);
 
-	const assignmentDialogOpen = () => {
-		setassignmentDialog(true);
+	const loadAssignments = () => {
+		GetOngoingAssignments(selectedSubject).then((asmts) => {
+			console.log('Ongoing', asmts);
+			setOngoingAssignments(asmts ? asmts : []);
+		});
+		GetFinishedAssignments(selectedSubject).then((asmts) => {
+			console.log('Finished', asmts);
+			setFinishedssignments(asmts ? asmts : []);
+		});
 	};
-	const assignmentDialogClose = () => {
-		setassignmentDialog(false);
-	};
+
+	useEffect(() => {
+		loadAssignments();
+	}, [selectedSubject]);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -39,7 +51,11 @@ const Assignment = () => {
 				<div className="assignment-heading">
 					<Title name="Assignments" />
 					<ThemeProvider theme={theme2}>
-						<Button variant="contained" color="primary" onClick={assignmentDialogOpen}>
+						<Button
+							variant="contained"
+							color="primary"
+							onClick={() => setassignmentDialog(true)}
+						>
 							+&nbsp;&nbsp;Add Assignment
 						</Button>
 					</ThemeProvider>
@@ -52,7 +68,7 @@ const Assignment = () => {
 						}}
 					>
 						<FiberManualRecordIcon className="current-dot"></FiberManualRecordIcon>
-						&nbsp;&nbsp;Current
+						&nbsp;&nbsp;Ongoing
 					</Button>
 					<Button
 						className={`tab-item ${index === 1 && 'active-change'}`}
@@ -61,23 +77,28 @@ const Assignment = () => {
 						}}
 					>
 						<FiberManualRecordIcon className="complete-dot"></FiberManualRecordIcon>
-						&nbsp;&nbsp;Completed
+						&nbsp;&nbsp;Finished
 					</Button>
 				</div>
 				<div className="assignment-list">
-					{assignment.map((details) => {
+					{(index === 0 ? ongoingAssignments : finishedAssignments).map((details) => {
 						return (
-							<div className="assignment-list-item">
+							<div key={details.assignmentId} className="assignment-list-item">
 								<div className="topic">
-									<b>Topic:</b>&nbsp;{details.topic}
+									<b>Topic:</b>&nbsp;{details.title}
 								</div>
 								<div className="date">
-									<b>Date:</b>&nbsp;({details.startDate})-({details.endDate})
+									<b>Date:</b>&nbsp;({new Date(details.startDate).toDateString()}
+									)-({new Date(details.endDate).toDateString()})
 								</div>
 								<div className="detail">
 									<Router color="primary">
 										<Link to={`/${details.id}`}>
-											<Button onClick={() => {}}>
+											<Button
+												onClick={() => {
+													console.log('Open: ', details.assignmentId);
+												}}
+											>
 												Show Details&nbsp;&nbsp;
 												<ArrowRightAltIcon />
 											</Button>
@@ -87,14 +108,16 @@ const Assignment = () => {
 							</div>
 						);
 					})}
+					{(index === 0 && ongoingAssignments.length === 0) ||
+					(index === 1 && finishedAssignments.length === 0) ? (
+						<h3>No {index === 0 ? 'Ongoing' : 'Finished'} Assignment Found</h3>
+					) : null}
 				</div>
-				<BaseDialogue
-					title="Assignment"
-					child={<CreateAssignment />}
+				<CreateAssignmentDialogue
 					open={assignmentDialog}
-					handleClose={assignmentDialogClose}
+					handleClose={() => setassignmentDialog(false)}
+					updateAssignmentList={loadAssignments}
 				/>
-				{/* <AssignmentDetail name={assignmentEconomics} /> */}
 			</div>
 		</ThemeProvider>
 	);

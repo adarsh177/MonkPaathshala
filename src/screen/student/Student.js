@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import StudentTopNav from '../../components/top nav/StudentTopNav';
 import Tooltip from '@material-ui/core/Tooltip';
 import HomeIcon from '@material-ui/icons/Home';
@@ -10,10 +10,50 @@ import Assignment from './Assignment/Assignment';
 import Test from './Test/Test';
 import Class from './Class/Class';
 import './student.scss';
+import firebase from '../../firebase';
+import { GetStudentProfile } from '../../database/StudentManagement';
+import { useDispatch, useSelector } from 'react-redux';
+import { Alert } from '@material-ui/lab';
 const Student = () => {
 	const [index, setIndex] = React.useState(0);
+	const dispatch = useDispatch();
+	const alertInfo = useSelector((state) => state.alertInfo);
+
+	useEffect(() => {
+		const authListener = firebase.auth().onAuthStateChanged((user) => {
+			if (user) {
+				GetStudentProfile().then((profile) => {
+					dispatch({
+						type: 'updateProfile',
+						data: profile,
+					});
+				});
+			} else {
+				window.location = '/';
+			}
+			authListener();
+		});
+	}, []);
+
+	// autoclose alert
+	useEffect(() => {
+		if (alertInfo) {
+			setTimeout(() => {
+				dispatch({
+					type: 'showAlert',
+					data: null,
+				});
+			}, 2000);
+		}
+	}, [alertInfo]);
+
 	return (
 		<div>
+			{alertInfo ? (
+				<Alert className="alert-toast" severity={alertInfo.severity}>
+					{alertInfo.text}
+				</Alert>
+			) : null}
 			<StudentTopNav />
 			<div className="students-dashboard">
 				<div className="student-side-nav">

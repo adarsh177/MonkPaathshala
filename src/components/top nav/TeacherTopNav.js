@@ -26,31 +26,8 @@ import ProfileDialog from '../dialogues/ProfileDialog';
 import { GetSubjects } from '../../database/TeacherManagement';
 import AddSubjectDialogue from '../dialogues/AddSubjectDialog';
 
-const subjects = [
-	{
-		value: 'Maths',
-		label: 'Maths Name will come here',
-	},
-	{
-		value: 'English',
-		label: 'English',
-	},
-	{
-		value: 'Hindi',
-		label: 'Hindi',
-	},
-	{
-		value: 'SST',
-		label: 'SST',
-	},
-];
 
 const TeacherTopNav = () => {
-	const useStyles = makeStyles((theme) => ({
-		button: {
-			margin: theme.spacing(1),
-		},
-	}));
 	const dispatch = useDispatch();
 	const subjects = useSelector((state) => state.subjects);
 	const selectedSubject = useSelector((state) => state.selectedSubject);

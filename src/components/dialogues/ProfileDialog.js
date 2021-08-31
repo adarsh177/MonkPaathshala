@@ -24,6 +24,7 @@ import { GetInputImageData } from '../../Utils';
 import '../../firebase';
 import firebase from 'firebase/app';
 import { UpdateTeacherProfile } from '../../database/TeacherManagement';
+import { UpdateStudentProfile } from '../../database/StudentManagement';
 
 const styles = makeStyles({
 	root: {
@@ -46,22 +47,56 @@ export default function ProfileDialog(props) {
 
 	const onSavePressed = (ev) => {
 		if (ev) ev.preventDefault();
+		let promise = null;
 		if (userType === 'student') {
 			// handle student save
+			if (!localProfile.name || localProfile.name.length < 3) {
+				setFieldErrors((err) => ({
+					...err,
+					nameField: true,
+				}));
+				return;
+			}
+			if (!localProfile.branch) {
+				setFieldErrors((err) => ({
+					...err,
+					branchField: true,
+				}));
+				return;
+			}
+			if (!localProfile.year) {
+				setFieldErrors((err) => ({
+					...err,
+					yearField: true,
+				}));
+				return;
+			}
 
-			return;
-		}
-
-		if (!localProfile.name || localProfile.name.length < 3) {
-			setFieldErrors((err) => ({
-				...err,
-				nameField: true,
-			}));
-			return;
+			const dataToSave = {
+				image: localProfile.image !== storeProfile.image ? localProfile.image : null,
+				branch: storeProfile.branch ? null : localProfile.branch,
+				year: storeProfile.year ? null : localProfile.year,
+				name: localProfile.name,
+			};
+			Object.keys(dataToSave).forEach((key) => {
+				if (!dataToSave[key]) {
+					delete dataToSave[key];
+				}
+			});
+			promise = UpdateStudentProfile(dataToSave);
+		} else {
+			if (!localProfile.name || localProfile.name.length < 3) {
+				setFieldErrors((err) => ({
+					...err,
+					nameField: true,
+				}));
+				return;
+			}
+			promise = UpdateTeacherProfile(localProfile.name, localProfile.image);
 		}
 
 		setProfileSaving(true);
-		UpdateTeacherProfile(localProfile.name, localProfile.image)
+		promise
 			.then((bool) => {
 				if (!bool) {
 					dispatch({
@@ -75,10 +110,18 @@ export default function ProfileDialog(props) {
 				}
 				dispatch({
 					type: 'updateProfile',
-					data: {
-						name: localProfile.name,
-						image: localProfile.image ? localProfile.image : null,
-					},
+					data:
+						userType === 'teacher'
+							? {
+									name: localProfile.name,
+									image: localProfile.image ? localProfile.image : null,
+							  }
+							: {
+									name: localProfile.name,
+									image: localProfile.image ? localProfile.image : null,
+									branch: localProfile.branch,
+									year: localProfile.year,
+							  },
 				});
 				dispatch({
 					type: 'showAlert',

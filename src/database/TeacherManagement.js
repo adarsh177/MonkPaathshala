@@ -133,19 +133,78 @@ export async function RemoveGroupFromSubject(subjectId, groupId) {
 	}
 }
 
-export async function GetAssignments() {
+export async function GetOngoingAssignments(subjectId) {
 	const firestore = firebaseApp.firestore();
-	const auth = firebaseApp.auth();
+	const currTime = new Date();
+	currTime.setHours(23, 59, 59);
 	try {
 		const assignments = await firestore
-			.collection('Teachers')
-			.doc(auth.currentUser.uid)
-			.collection('assignments')
-			.orderBy('startTime', 'desc')
+			.collection('Subjects')
+			.doc(subjectId)
+			.collection('Assignments')
+			.orderBy('endDate', 'desc')
+			.where('endDate', '>=', currTime.getTime())
 			.get();
-		return assignments.docs;
+		return assignments.docs.map((doc) => doc.data());
 	} catch (err) {
-		console.log('UserManagement_GetAssignments', err);
+		console.log('UserManagement_GetOngoingAssignments', err);
+		return false;
+	}
+}
+
+export async function GetFinishedAssignments(subjectId) {
+	const firestore = firebaseApp.firestore();
+	const currTime = new Date();
+	currTime.setHours(23, 59, 59);
+	try {
+		const assignments = await firestore
+			.collection('Subjects')
+			.doc(subjectId)
+			.collection('Assignments')
+			.orderBy('endDate', 'desc')
+			.where('endDate', '<', currTime.getTime())
+			.get();
+		return assignments.docs.map((doc) => doc.data());
+	} catch (err) {
+		console.log('UserManagement_GetFinishedAssignments', err);
+		return false;
+	}
+}
+
+export async function GetOngoingTest(subjectId) {
+	const firestore = firebaseApp.firestore();
+	const currTime = new Date();
+	currTime.setHours(23, 59, 59);
+	try {
+		const assignments = await firestore
+			.collection('Subjects')
+			.doc(subjectId)
+			.collection('Assignments')
+			.orderBy('endDate', 'desc')
+			.where('endDate', '>=', currTime.getTime())
+			.get();
+		return assignments.docs.map((doc) => doc.data());
+	} catch (err) {
+		console.log('UserManagement_GetOngoingAssignments', err);
+		return false;
+	}
+}
+
+export async function GetFinishedTest(subjectId) {
+	const firestore = firebaseApp.firestore();
+	const currTime = new Date();
+	currTime.setHours(23, 59, 59);
+	try {
+		const assignments = await firestore
+			.collection('Subjects')
+			.doc(subjectId)
+			.collection('Assignments')
+			.orderBy('endDate', 'desc')
+			.where('endDate', '<', currTime.getTime())
+			.get();
+		return assignments.docs.map((doc) => doc.data());
+	} catch (err) {
+		console.log('UserManagement_GetFinishedAssignments', err);
 		return false;
 	}
 }
@@ -158,11 +217,30 @@ export async function GetTests() {
 			.collection('Teachers')
 			.doc(auth.currentUser.uid)
 			.collection('tests')
-			.orderBy('startTime', 'desc')
+			.orderBy('startDate', 'desc')
 			.get();
 		return assignments.docs;
 	} catch (err) {
 		console.log('UserManagement_GetTests', err);
+		return false;
+	}
+}
+
+export async function CreateAssignment(subjectId, assignmentData) {
+	const firestore = firebaseApp.firestore();
+	try {
+		const assignmentPush = await firestore
+			.collection('Subjects')
+			.doc(subjectId)
+			.collection('Assignments')
+			.doc();
+		await assignmentPush.set({
+			assignmentId: assignmentPush.id,
+			...assignmentData,
+		});
+		return assignmentPush.id;
+	} catch (err) {
+		console.log('UserManagement_CreateAssignment', err);
 		return false;
 	}
 }

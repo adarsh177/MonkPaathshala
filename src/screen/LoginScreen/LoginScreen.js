@@ -7,6 +7,7 @@ import firebase from '../../firebase';
 import './LoginScreen.scss';
 import { useHistory } from 'react-router-dom';
 import { CreateTeacher } from '../../database/TeacherManagement';
+import { CreateStudent } from '../../database/StudentManagement';
 
 function LoginScreen(props) {
 	const [userType, setUserType] = useState('student'); // student, teacher
@@ -22,7 +23,14 @@ function LoginScreen(props) {
 
 					if (type === 'student') {
 						// do something
-						alert('student');
+						CreateStudent().then((bool) => {
+							if (bool) {
+								history.push('/dashboard');
+							} else {
+								alert('Error logging you In, try again');
+								firebase.auth().signOut();
+							}
+						});
 					} else {
 						CreateTeacher().then((bool) => {
 							if (bool) {
@@ -33,6 +41,8 @@ function LoginScreen(props) {
 							}
 						});
 					}
+					// updating parent component with userType
+					if (window.onLoginComplete) window.onLoginComplete(type);
 					return type;
 				});
 				return false;

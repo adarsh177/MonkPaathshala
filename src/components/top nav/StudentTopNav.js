@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './topnav.scss';
 import Logo from '../../media/logo.png';
 import Button from '@material-ui/core/Button';
@@ -23,6 +23,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import ProfileDialog from '../dialogues/ProfileDialog';
+import ConfirmationBaseDialog from '../dialogues/ConfirmationBaseDialog';
+import LogoutChild from '../dialogues/dialogueChild/LogoutChild';
+import firebase from '../../firebase';
 
 const StudentTopNav = () => {
 	const useStyles = makeStyles((theme) => ({
@@ -34,6 +38,8 @@ const StudentTopNav = () => {
 		},
 	}));
 	const classes = useStyles();
+	const [showProfile, setShowProfile] = useState(false);
+	const [showLogout, setShowLogout] = useState(false);
 
 	//material-ui profile Dropdown ------------------------
 
@@ -186,8 +192,12 @@ const StudentTopNav = () => {
 												id="menu-list-grow"
 												onKeyDown={handleListKeyDown}
 											>
-												<MenuItem onClick={() => {}}>Profile</MenuItem>
-												<MenuItem onClick={() => {}}>Logout</MenuItem>
+												<MenuItem onClick={() => setShowProfile(true)}>
+													Profile
+												</MenuItem>
+												<MenuItem onClick={() => setShowLogout(true)}>
+													Logout
+												</MenuItem>
 											</MenuList>
 										</ClickAwayListener>
 									</Paper>
@@ -197,6 +207,17 @@ const StudentTopNav = () => {
 					</div>
 				</div>
 			</div>
+			<ProfileDialog open={showProfile} handleClose={() => setShowProfile(false)} />
+			<ConfirmationBaseDialog
+				action="Logout"
+				child={<LogoutChild />}
+				open={showLogout}
+				handleClose={() => setShowLogout(false)}
+				onClick={async () => {
+					await firebase.auth().signOut();
+					window.location = '/';
+				}}
+			/>
 		</div>
 	);
 };
